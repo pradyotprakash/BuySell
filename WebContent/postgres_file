@@ -1,0 +1,37 @@
+drop table item_sell;
+drop table item_buy;
+drop table items;
+drop table id_tracker;
+
+create table id_tracker(
+	current_id varchar(10) not null
+);
+
+insert into id_tracker values('1');
+
+create table items(
+	item_id varchar(10) primary key,
+	name varchar(100),
+	description varchar(1000) not null,
+	category varchar(100) not null,
+	timestamp date not null,
+	is_biddable char(1) not null,
+	bidding_price numeric(8,2) default 0,
+	check(is_biddable in ('n', 'y'))
+);
+
+create table item_sell(
+	id varchar(20) references login_data(id) on delete cascade,
+	quantity integer not null,
+	price numeric(8,2) not null,
+	interested_buyers varchar(20) array,
+	primary key(id, item_id)
+) inherits(items);
+
+create table item_buy(
+	id varchar(20) references login_data(id) on delete cascade,
+	quantity integer not null,
+	price numeric(8,2) not null,
+	interested_buyers varchar(20) array,
+	primary key(id, item_id)
+) inherits(items);
