@@ -35,7 +35,7 @@
 
 </head>
 <%
-String id = "", name;
+String id = "", name="";
 	if(session.getAttribute("user_logged_in") == null){
 		out.println("<script>window.location.assign('index.jsp')</script>");
 	}
@@ -53,7 +53,7 @@ String id = "", name;
 	 %>
 <body>
 	
-	Welcome user!<br>
+	Welcome <% out.println(name); %>!<br>
 	<%@include file="header" %>
 	
 	
