@@ -27,7 +27,6 @@
 	<%@include file="header" %>
 <%
 	ResultSet rs = AccessDatabase.GetSellingListing(id);
-	System.out.println(rs);
 	if(rs == null){
 		out.println("No listings so far by you!<br>");
 	}
@@ -48,12 +47,14 @@
 			out.print("<td>" + rs.getString(2) + "</td>\n\t\t");
 			out.print("<td>" + rs.getString(3) + "</td>\n\t\t");
 			out.print("<td>" + rs.getString(4) + "</td>\n\t\t");
-			out.print("<td>" + rs.getTime(5) + "</td>\n\t\t");
+			out.print("<td>" + rs.getTimestamp(11) + "</td>\n\t\t");
+			out.print("<td>" + rs.getInt(8) + "</td>\n\t\t");
 			out.print("<td>" + rs.getInt(9) + "</td>\n\t\t");
-			out.print("<td>" + rs.getInt(10) + "</td>\n\t\t");
 			out.print("<td>");
-			Array a = rs.getArray(11);
+			System.out.println("trtre");
+			Array a = rs.getArray(10);
 			String[] array;
+			//System.out.println(a.toString());
 			if(a != null){
 				array = (String[])a.getArray();
 				for(int j=0;j<array.length;++j){
