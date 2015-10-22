@@ -27,7 +27,7 @@
 			String status = null;
 			String id = request.getParameter("id");
 			String passwd = request.getParameter("password");
-			
+			session.setAttribute("user_logged_in", "false");
 			if(id != null || passwd != null)
 				firstTime = false;
 			

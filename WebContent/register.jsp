@@ -22,19 +22,21 @@
 		<script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 	</head>
 <%	
-	String id = "", name;
-	if(session.getAttribute("user_logged_in") == null){
-		out.println("<script>window.location.assign('index.jsp')</script>");
-	}
-	else{
-		if(!session.getAttribute("user_logged_in").equals("true")){
+	
+	boolean firstTime = true;
+	int status = -100;
+	String id = request.getParameter("id");
+	String name = request.getParameter("name");
+	String email = request.getParameter("email");
+	String passwd = request.getParameter("passwd");
+	
+	if(id != null || name != null || email != null || passwd != null)
+		firstTime = false;
+	if(!firstTime){
+		status = Register.register(id, name, email, passwd);
+		if(status == 0){
+			session.setAttribute("registered", "true");
 			out.println("<script>window.location.assign('index.jsp')</script>");
-		}
-		else{
-			if(session.getAttribute("id") != null)
-				id = session.getAttribute("id").toString();
-			if(session.getAttribute("username") != null)
-				name = session.getAttribute("username").toString();
 		}
 	}
 	 %>
