@@ -91,7 +91,7 @@
 		<form action="process.jsp" method="post" onsubmit="return verify()">
 		<input name="type_of" type="hidden" value="sell_wishlist">
 		<%
-		System.out.println("in");
+	
 		while(rs.next()){
 			out.println("<div id='entry'>");
 			out.println("<span id='e" + count + "' style='color:red'></span><br>");

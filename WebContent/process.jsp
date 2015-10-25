@@ -54,7 +54,6 @@
 				System.out.println("YOYO " + orderList);
 			}
 			else{
-				ArrayList<String> itemsAlreadyInWishlist = AccessDatabase.GetItemsInWishlistForUser(id);
 				String[] entriesToUpdate = orderList.split(",");
 				
 				for(int i=0;i<entriesToUpdate.length;++i){

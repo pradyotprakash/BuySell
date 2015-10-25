@@ -171,7 +171,7 @@ public static boolean AddToSellWishlist(String id, String itemid, String specifi
 		
 		PreparedStatement pstmt = connection.prepareStatement("insert into item_sell_wishlist values(?,?,?)");
 		
-		pstmt.setString(1, itemid);
+		pstmt.setInt(1, Integer.parseInt(itemid));
 		pstmt.setString(2, id);
 		pstmt.setString(3, specification);
 		
@@ -196,7 +196,7 @@ public static boolean AddToSellWishlist(String id, String itemid, String specifi
 		flag = true;
 		
 	} catch(SQLException sqle){
-		System.out.println("SQL exception!");
+		System.out.println("SQL exception in AddToSellWishlist" + sqle);
 	} finally{
 		closeConnection(connection);
 	}
