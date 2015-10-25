@@ -3,6 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="database.AccessDatabase" %>
+<%@ page import="java.sql.Array.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -51,16 +52,9 @@
 			out.print("<td>" + rs.getInt(8) + "</td>\n\t\t");
 			out.print("<td>" + rs.getInt(9) + "</td>\n\t\t");
 			out.print("<td>");
-			System.out.println("trtre");
 			Array a = rs.getArray(10);
-			String[] array;
-			//System.out.println(a.toString());
-			if(a != null){
-				array = (String[])a.getArray();
-				for(int j=0;j<array.length;++j){
-					out.print(array[j] + ",");
-				}
-			}
+			String[] pathArray=(String[])a.getArray();
+			
 			out.print("</td>\n\t</tr>\n\t");
 			count++;
 		}

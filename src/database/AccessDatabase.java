@@ -19,10 +19,11 @@ public class AccessDatabase {
 			
 			PreparedStatement pstmt = connection.prepareStatement("select * from items natural join item_sell where id=?");
 			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();		
+			rs = pstmt.executeQuery();	
+			/*select items.name, items.descritpion, items.category, item_sell.quantity, items.price, login_data.name from items natural join item_sell natural join login_data where id=?*/
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception! in GetSellingList " + sqle);
 		} finally{
 			closeConnection(connection);
 		}
@@ -30,7 +31,7 @@ public class AccessDatabase {
 		return rs;
 	}
 	
-	public static ResultSet GetBuyingListing(String owner){
+	public static ResultSet Get_items_on_sale(String owner){
 		
 		boolean flag = false;
 		Connection connection = null;

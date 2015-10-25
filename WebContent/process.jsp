@@ -33,16 +33,10 @@
 			
 			int item_price = Integer.parseInt(request.getParameter("item_price"));
 			int item_quantity = Integer.parseInt(request.getParameter("item_quantity"));
-			
-			String item_biddable = request.getParameter("item_biddable");
-			int item_bidding_price = -1;
-			
-			if(!item_biddable.equals("no")){
-				item_bidding_price = Integer.parseInt(request.getParameter("item_bidding_price"));
-			}
+
 			
 			// execute insert
-			boolean success = UpdateDatabase.AddSellingListing(id, item_name, item_description, item_category, item_price, item_quantity, item_biddable, item_bidding_price);
+			boolean success = UpdateDatabase.AddSellingListing(id, item_name, item_description, item_category, item_price, item_quantity);
 			if(success){
 				session.setAttribute("item_sell_insert", "true");
 			}
@@ -50,13 +44,14 @@
 			out.println("<script>window.location.assign('add_listing.jsp')</script>");
 		}
 		
-		else if(type.equals("wishlist")){
+		else if(type.equals("sell_wishlist")){
 			
 			String orderList = request.getParameter("order_list");
 			int count = orderList.length() - orderList.replace(",", "").length();
-			if(orderList.length() == 0 || count == 0){
+			if(orderList.length() == 0 || count==0){
 				session.setAttribute("wishlist_updated", "true");
 				out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
+				System.out.println("YOYO " + orderList);
 			}
 			else{
 				ArrayList<String> itemsAlreadyInWishlist = AccessDatabase.GetItemsInWishlistForUser(id);
@@ -64,46 +59,22 @@
 				
 				for(int i=0;i<entriesToUpdate.length;++i){
 					String index = entriesToUpdate[i];
-					
 					// check if already present in the database
 					String itemid = request.getParameter("item" + index + "_itemid");
-					if(itemsAlreadyInWishlist.contains(itemid)){
-				
-						// update
-						String quantity = request.getParameter("item" + index + "_quantity");
-						String owner = request.getParameter("item" + index + "_owner");
-						String pricerange = request.getParameter("item" + index + "_price_range");
-						String comment = request.getParameter("item" + index + "_comment");
-						String specification = request.getParameter("item" + index + "_specification");
-						boolean success = UpdateDatabase.UpdateWishlist(id, itemid, quantity, owner, pricerange, comment, specification);
-						
-						if(success){
-							session.setAttribute("wishlist_updated", "true");
-							out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
-						}
-						else{
-							session.setAttribute("wishlist_updated", "false");
-							out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
-						}
+					
+					// insert
+					String owner = request.getParameter("item" + index + "_owner");
+					String specification = request.getParameter("item" + index + "_specification");
+					
+					boolean success = UpdateDatabase.AddToSellWishlist(id, itemid, specification);
+					
+					if(success){
+						session.setAttribute("wishlist_updated", "true");
+						out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
 					}
 					else{
-						// insert
-						String quantity = request.getParameter("item" + index + "_quantity");
-						String owner = request.getParameter("item" + index + "_owner");
-						String pricerange = request.getParameter("item" + index + "_price_range");
-						String comment = request.getParameter("item" + index + "_comment");
-						String specification = request.getParameter("item" + index + "_specification");
-						
-						boolean success = UpdateDatabase.AddToWishlist(id, itemid, quantity, owner, pricerange, comment, specification);
-						
-						if(success){
-							session.setAttribute("wishlist_updated", "true");
-							out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
-						}
-						else{
-							session.setAttribute("wishlist_updated", "false");
-							out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
-						}
+						session.setAttribute("wishlist_updated", "false");
+						out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
 					}
 				}
 			}	

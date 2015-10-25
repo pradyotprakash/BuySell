@@ -1,9 +1,13 @@
+drop table item_sell_wishlist;
+drop table item_buy_wishlist;
+drop table item_buy;
 drop table item_sell;
-drop table item_wishlist;
 drop table transaction_history;
 drop table items;
 drop table id_tracker;
 drop table messages;
+drop table login_data;
+
 
 create table id_tracker(
 	current_id varchar(10) not null
@@ -11,9 +15,18 @@ create table id_tracker(
 
 insert into id_tracker values('1');
 
+create table login_data(
+	id varchar(20),
+	username varchar(20),
+	password varchar(20),
+	email varchar(30),
+	primary key (id)
+);
+
 create table items(
-	item_id varchar(10) primary key,
-	name varchar(100),
+	id varchar(20) references login_data(id) on delete cascade,
+	item_id serial primary key ,
+	name varchar(100) not null,
 	description varchar(1000) not null,
 	category varchar(100) not null,
 	is_biddable char(1) not null,
@@ -23,33 +36,44 @@ create table items(
 
 create table item_sell(
 	id varchar(20) references login_data(id) on delete cascade,
-	item_id varchar(10) references items(item_id) on delete cascade,
+	item_id int references items(item_id) on delete cascade,
 	quantity integer not null,
 	price numeric(8,2) not null,
-	interested_buyers varchar(20) array,
 	time_ timestamp not null,
-	no_of_interested_buyers integer not null,
-	primary key(id, item_id),
+	primary key (item_id),
 	check(quantity > 0),
 	check(price > 0.00)
 );
 
-create table item_wishlist(
+create table item_sell_wishlist (
+	item_id int references item_sell(item_id),
+	id varchar(20) references login_data(id),
+	message varchar(1000) not null 
+
+);
+
+create table item_buy(
 	id varchar(20) references login_data(id) on delete cascade,
-	item_id varchar(10) references items(item_id) on delete cascade,
+	item_id int references items(item_id) on delete cascade,
 	quantity integer not null,
 	price_range varchar(20),
 	specifications varchar(1000),
 	comments varchar(1000),
 	time_ timestamp not null,
-	primary key(id, item_id),
+	primary key (item_id),
 	check(quantity > 0)
+);
+
+create table item_buy_wishlist (
+	item_id int references item_buy(item_id),
+	id varchar(20) references login_data(id),
+	message varchar(1000) not null 
 );
 
 create table transaction_history(
 	buyer varchar(20) references login_data(id) on delete cascade,
 	seller varchar(20) references login_data(id) on delete cascade,
-	item_id varchar(10) references items(item_id) on delete cascade,
+	item_id int references items(item_id) on delete cascade,
 	price numeric(8,2) not null,
 	quantity integer not null,
 	comments varchar(1000),

@@ -1,7 +1,7 @@
 <nav>	
-	<a href="add_listing.jsp">Add listing</a>
-	<a href="see_listings.jsp">See listings</a>
-	<a href="add_wishlist.jsp">Buy</a>
+	<a href="add_listing.jsp">Sell Something</a>
+	<a href="see_listings.jsp">Status</a>
+	<a href="add_wishlist.jsp">Available to buy</a>
 	<a href="messages.jsp">Messages</a>
 	<a href="history.jsp">History</a>
 	<a href="search.jsp">Search for items</a>

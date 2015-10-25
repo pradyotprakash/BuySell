@@ -5,7 +5,7 @@ import java.sql.*;
 public class UpdateDatabase {
 	
 	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, 
-			int item_price, int item_quantity, String item_biddable, int item_bidding_price){
+			int item_price, int item_quantity){
 		
 		boolean flag = false;
 		Connection connection = null;
@@ -23,31 +23,31 @@ public class UpdateDatabase {
 			}
 					
 			// columns are
-			// item_id | name | description | category | is_biddable | bidding_price
+			// id | item_id | name | description | category | is_biddable | bidding_price
 			pstmt = connection.prepareStatement
-					("insert into items values(?,?,?,?,?,?)");
-			pstmt.setString(1, Integer.toString(i));
+					("insert into items (id,name,description,category,is_biddable,bidding_price) values (?,?,?,?,?,?) returning item_id");
+			pstmt.setString(1, id);
 			pstmt.setString(2, item_name);
 			pstmt.setString(3, item_description);
 			pstmt.setString(4, item_category);
-			if(item_biddable.equals("no")){
-				pstmt.setString(5, "n");
-				pstmt.setDouble(6, 0);
-			}
-			else{
-				pstmt.setString(5, "y");
-				pstmt.setDouble(6, item_bidding_price);
-			}
+			pstmt.setString(5, "n");
+			pstmt.setDouble(6, 0);
+			/*pstmt.executeUpdate();
 			
-			pstmt.executeUpdate();
-			
-			// columns are
-			// id | item_id | quantity | price | interested_buyers | timestamp
 			pstmt = connection.prepareStatement
-					("insert into item_sell values(?,?,?,?,null,now(),1)");
+					("select currval('items_item_id_seq') ");*/
+			ResultSet res = pstmt.executeQuery();
+			Integer last_inserted=0;
+			while(res.next()){
+				last_inserted = res.getInt(1);
+			}
+			// columns are
+			// id | item_id | quantity | price | timestamp
+			pstmt = connection.prepareStatement
+					("insert into item_sell (id,item_id,quantity,price,time_) values(?,?,?,?,now())");
 			
 			pstmt.setString(1, id);
-			pstmt.setString(2, Integer.toString(i));
+			pstmt.setInt(2, last_inserted);
 			pstmt.setInt(3, item_quantity);
 			pstmt.setInt(4, item_price);
 			
@@ -64,6 +64,7 @@ public class UpdateDatabase {
 			flag = true;			
 		
 		} catch(SQLException sqle){
+			System.out.println(sqle);
 			sqle.printStackTrace();
 			try {
 				connection.rollback();
@@ -71,7 +72,7 @@ public class UpdateDatabase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception! in insertion into items"+sqle);
 		} finally{
 			closeConnection(connection);
 		}
@@ -159,8 +160,7 @@ public static boolean InsertMessageIntoDatabase(String sender, String receiver, 
 	return flag;
 }
 
-public static boolean AddToWishlist(String id, String itemid, String quantity, 
-		String owner, String pricerange, String comment, String specification){
+public static boolean AddToSellWishlist(String id, String itemid, String specification){
 	
 	boolean flag = false;
 	Connection connection = null;
@@ -169,19 +169,15 @@ public static boolean AddToWishlist(String id, String itemid, String quantity,
 		connection = getConnection();
 		connection.setAutoCommit(false);
 		
-		PreparedStatement pstmt = connection.prepareStatement
-				("insert into item_wishlist values(?,?,?,?,?,?,now())");
+		PreparedStatement pstmt = connection.prepareStatement("insert into item_sell_wishlist values(?,?,?)");
 		
-		pstmt.setString(1, id);
-		pstmt.setString(2, itemid);
-		pstmt.setInt(3, Integer.parseInt(quantity));
-		pstmt.setString(4, pricerange);
-		pstmt.setString(5, specification);
-		pstmt.setString(6, comment);
+		pstmt.setString(1, itemid);
+		pstmt.setString(2, id);
+		pstmt.setString(3, specification);
 		
 		pstmt.executeUpdate();
 		
-		pstmt = connection.prepareStatement("select no_of_interested_buyers from item_sell where id=? and item_id=?");
+		/*pstmt = connection.prepareStatement("select no_of_interested_buyers from item_sell where id=? and item_id=?");
 		pstmt.setString(1, owner);
 		pstmt.setString(2, itemid);
 		ResultSet rs = pstmt.executeQuery();
@@ -194,7 +190,7 @@ public static boolean AddToWishlist(String id, String itemid, String quantity,
 		pstmt.setInt(3, c+1);
 		pstmt.setString(4, owner);
 		pstmt.setString(5, itemid);
-		pstmt.executeUpdate();
+		pstmt.executeUpdate();*/
 		
 		connection.commit();
 		flag = true;

@@ -41,11 +41,6 @@ else{
 		<input type="number" name="item_quantity" required placeholder="Quantity to sell"><br>
 		<input type="number" name="item_price" required placeholder="Price"><br>
 		<input type="text" name="item_category" required placeholder="Category"><br>
-		Is item biddable: 
-		<input type="radio" name="item_biddable" value="yes">Yes
-		<input type="radio" name="item_biddable" value="no" checked="checked">No<br>
-		If yes, then enter the base price. If not, ignore this
-		<input type="number" name="item_bidding_price"><br>
 		<input type="submit">
 		
 	</form>

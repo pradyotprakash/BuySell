@@ -27,8 +27,7 @@ public class Register {
 			if(count != 0)
 				return 1;
 			
-			pstmt = connection.prepareStatement("insert into login_data values(?,?,?,?)");
-			
+			pstmt = connection.prepareStatement("insert into login_data (id,username,password,email) values(?,?,?,?)");
 			pstmt.setString(1, id);
 			pstmt.setString(2, name);
 			pstmt.setString(3, passwd);
@@ -41,7 +40,7 @@ public class Register {
 			
 			
 		} catch(SQLException sqle){
-			System.out.println("SQL exception when getting course list");
+			System.out.println("SQL exception when registering");
 		} finally{
 			closeConnection(connection);
 		}
