@@ -41,14 +41,15 @@ create table item_sell(
 	price numeric(8,2) not null,
 	time_ timestamp not null,
 	primary key (item_id),
-	check(quantity > 0),
+	check(quantity >= 0),
 	check(price > 0.00)
 );
 
 create table item_sell_wishlist (
-	item_id int references item_sell(item_id),
-	id varchar(20) references login_data(id),
-	message varchar(1000) not null 
+	item_id int references item_sell(item_id) on delete cascade,
+	id varchar(20) references login_data(id) on delete cascade,
+	message varchar(1000) not null,
+	quantity integer not null 
 
 );
 
@@ -65,8 +66,8 @@ create table item_buy(
 );
 
 create table item_buy_wishlist (
-	item_id int references item_buy(item_id),
-	id varchar(20) references login_data(id),
+	item_id int references item_buy(item_id) on delete cascade,
+	id varchar(20) references login_data(id) on delete cascade,
 	message varchar(1000) not null 
 );
 

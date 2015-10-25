@@ -46,10 +46,25 @@
 	function verify(){
 		var flag = true;
 		var count = document.getElementsByTagName('div').length/2;
+		for(var i=1;i<=count;++i){
+			var x = document.getElementById('q' + i).innerHTML;
+			var y = document.getElementsByName('item' + i + '_quantity')[0].value;
+			if(parseInt(y) > parseInt(x.substr(20, x.length-20))){
+				document.getElementById('e' + i).innerHTML = "Cannot order more than the available amount!";
+				flag = false;
+			}
+			else if (parseInt(y)<0) {
+				document.getElementById('e' + i).innerHTML = "Positive amount please Motherfucker!";
+				flag = false;	
+			}
+			else{
+				document.getElementById('e' + i).innerHTML = "";
+			}
+		}
 		if(flag){
 			var selected = '';
 			for(var i=1;i<=count;++i){
-				var val = document.getElementsByName('item' + i + '_specification')[0].value; 
+				var val = document.getElementsByName('item' + i + '_quantity')[0].value; 
 				if(val == ''){
 				}
 				else{
@@ -118,6 +133,7 @@
 			out.println("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>");
 			out.println("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>");
 			out.println("<textarea name='item" + count + "_specification' placeholder='Message' value='specs'></textarea><br>");
+			out.println("<input type='number' name='item" + count + "_quantity'>");
 			out.println("</div>");
 			out.println("<hr>");
 			count++; 

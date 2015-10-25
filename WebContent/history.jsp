@@ -40,7 +40,7 @@
 	<table border="2">
 		<tr>
 			<td>Sl. No.</td>
-			<td>Item name</td>
+			<td>Item id </td>
 			<td>Buyer</td>
 			<td>Price</td>
 			<td>Quantity</td>
@@ -53,11 +53,11 @@
 		while(rs.next()){
 			out.println("<tr>");
 			out.println("<td>" + count + "</td>");
+			out.println("<td>" + rs.getString(3) + "</td>");
 			out.println("<td>" + rs.getString(1) + "</td>");
-			out.println("<td>" + rs.getString(2) + "</td>");
-			out.println("<td>" + rs.getDouble(3) + "</td>");
-			out.println("<td>" + rs.getInt(4) + "</td>");
-			out.println("<td>" + rs.getTimestamp(5) + "</td>");
+			out.println("<td>" + rs.getDouble(4) + "</td>");
+			out.println("<td>" + rs.getInt(5) + "</td>");
+			out.println("<td>" + rs.getTimestamp(7) + "</td>");
 			out.println("<td>" + rs.getString(6) + "</td>");
 			out.println("</tr>");
 		}
@@ -91,11 +91,11 @@
 		while(rs.next()){
 			out.println("<tr>");
 			out.println("<td>" + count + "</td>");
-			out.println("<td>" + rs.getString(1) + "</td>");
+			out.println("<td>" + rs.getString(3) + "</td>");
 			out.println("<td>" + rs.getString(2) + "</td>");
-			out.println("<td>" + rs.getDouble(3) + "</td>");
-			out.println("<td>" + rs.getInt(4) + "</td>");
-			out.println("<td>" + rs.getTimestamp(5) + "</td>");
+			out.println("<td>" + rs.getDouble(4) + "</td>");
+			out.println("<td>" + rs.getInt(5) + "</td>");
+			out.println("<td>" + rs.getTimestamp(7) + "</td>");
 			out.println("<td>" + rs.getString(6) + "</td>");
 			out.println("</tr>");
 		}

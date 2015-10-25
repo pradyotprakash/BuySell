@@ -17,7 +17,7 @@ public class AccessDatabase {
 		try{
 			connection = getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("select * from items natural join item_sell where id=?");
+			PreparedStatement pstmt = connection.prepareStatement("select * from (items natural join item_sell) join (item_sell_wishlist natural join login_data) using (item_id) where items.id=?");
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();	
 			/*select items.name, items.descritpion, items.category, item_sell.quantity, items.price, login_data.name from items natural join item_sell natural join login_data where id=?*/
@@ -118,9 +118,7 @@ public class AccessDatabase {
 			connection = getConnection();
 			
 			PreparedStatement pstmt = connection.prepareStatement
-					("select name, username, price, quantity, time_, comments "
-					+ "from ((transaction_history natural join items) join login_data on id=buyer) "
-					+ "where seller=?;");
+					("select * from transaction_history where seller=?;");
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 		
@@ -143,9 +141,7 @@ public class AccessDatabase {
 			connection = getConnection();
 			
 			PreparedStatement pstmt = connection.prepareStatement
-					("select name, username, price, quantity, time_, comments "
-					+ "from ((transaction_history natural join items) join login_data on id=seller) "
-					+ "where buyer=?;");
+					("select* from transaction_history where buyer=?;");
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 		

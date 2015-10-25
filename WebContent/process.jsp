@@ -64,8 +64,9 @@
 					// insert
 					String owner = request.getParameter("item" + index + "_owner");
 					String specification = request.getParameter("item" + index + "_specification");
-					
-					boolean success = UpdateDatabase.AddToSellWishlist(id, itemid, specification);
+					String quantity1 = request.getParameter("item" + index + "_quantity");
+					Integer quantity = Integer.parseInt(quantity1);
+					boolean success = UpdateDatabase.AddToSellWishlist(id, itemid, specification, quantity);
 					
 					if(success){
 						session.setAttribute("wishlist_updated", "true");
@@ -85,6 +86,23 @@
 			boolean success = UpdateDatabase.InsertMessageIntoDatabase(id, receiver, message);
 			session.setAttribute("refresh_message_frame", "true");
 			out.println("<script>window.location.assign('message_input.jsp')</script>");
+		}
+		else if(type.equals("sell_item")){
+			
+			String itemid = request.getParameter("id");
+			String owner = request.getParameter("owner");
+			String buyer = request.getParameter("buyer");
+			String quantity1 = request.getParameter("quantity");
+			Integer quantity = Integer.parseInt(quantity1);
+			boolean success = UpdateDatabase.Sell_item(itemid, buyer, owner, quantity);
+			if(success){
+				session.setAttribute("Selling_Successful", "true");
+				out.println("<script>window.location.assign('see_listings.jsp')</script>");
+			}
+			else{
+				session.setAttribute("Selling_Successful", "false");
+				out.println("<script>window.location.assign('see_listings.jsp')</script>");
+			}
 		}
 	}
 	
