@@ -43,6 +43,24 @@
 			else session.setAttribute("item_sell_insert", "false");
 			out.println("<script>window.location.assign('add_listing.jsp')</script>");
 		}
+		else if(type.equals("add_listing_buy")){
+			String item_name = request.getParameter("item_name");
+			String item_description = request.getParameter("item_description");
+			String item_category = request.getParameter("item_category");
+			String item_comments = request.getParameter("item_comments");
+			int item_price1 = Integer.parseInt(request.getParameter("item_price1"));
+			int item_price2 = Integer.parseInt(request.getParameter("item_price2"));
+			int item_quantity = Integer.parseInt(request.getParameter("item_quantity"));
+
+			
+			// execute insert
+			boolean success = UpdateDatabase.AddBuyingListing(id, item_name, item_description, item_category, item_comments, item_price1, item_price2, item_quantity);
+			if(success){
+				session.setAttribute("item_buy_insert", "true");
+			}
+			else session.setAttribute("item_buy_insert", "false");
+			out.println("<script>window.location.assign('add_listing_buy.jsp')</script>");
+		}
 		
 		else if(type.equals("sell_wishlist")){
 			

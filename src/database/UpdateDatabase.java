@@ -80,7 +80,82 @@ public class UpdateDatabase {
 		return flag;
 	}
 	
-public static boolean InsertMessageIntoDatabase(String sender, String receiver, String message){
+	public static boolean AddBuyingListing(String id, String item_name, String item_description, String item_category, String item_comments, int item_price1, int item_price2, int item_quantity){
+		
+		boolean flag = false;
+		Connection connection = null;
+		int i = 0;
+		
+		try{
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from id_tracker");
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				i = rs.getInt(1); 
+			}
+					
+			// columns are
+			// id | item_id | name | description | category | is_biddable | bidding_price
+			pstmt = connection.prepareStatement("insert into items (id,name,description,category,is_biddable,bidding_price) values (?,?,?,?,?,?) returning item_id");
+			pstmt.setString(1, id);
+			pstmt.setString(2, item_name);
+			pstmt.setString(3, item_description);
+			pstmt.setString(4, item_category);
+			pstmt.setString(5, "n");
+			pstmt.setDouble(6, 0);
+			/*pstmt.executeUpdate();
+			
+			pstmt = connection.prepareStatement
+					("select currval('items_item_id_seq') ");*/
+			ResultSet res = pstmt.executeQuery();
+			Integer last_inserted=0;
+			while(res.next()){
+				last_inserted = res.getInt(1);
+			}
+			// columns are
+			// id | item_id | quantity | price | timestamp
+			pstmt = connection.prepareStatement("insert into item_buy (id,item_id,quantity,price_range,specifications,comments,time_) values(?,?,?,?,?,?,now())");
+			
+			pstmt.setString(1, id);
+			pstmt.setInt(2, last_inserted);
+			pstmt.setInt(3, item_quantity);
+			pstmt.setString(4, ""+item_price1+"-"+item_price2);
+			pstmt.setString(5, item_description);
+			pstmt.setString(6, item_comments);
+			
+			pstmt.executeUpdate();
+			
+			
+			pstmt = connection.prepareStatement("update id_tracker set current_id=? where current_id=?");
+			pstmt.setString(1, Integer.toString(i+1));
+			pstmt.setString(2, Integer.toString(i));
+			pstmt.executeUpdate();
+			
+			connection.commit();
+			
+			flag = true;			
+		
+		} catch(SQLException sqle){
+			System.out.println(sqle);
+			sqle.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("SQL exception! in insertion into items"+sqle);
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return flag;
+	}
+	
+	public static boolean InsertMessageIntoDatabase(String sender, String receiver, String message){
 		
 		boolean flag = false;
 		Connection connection = null;  

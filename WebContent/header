@@ -1,5 +1,6 @@
 <nav>	
 	<a href="add_listing.jsp">Sell Something</a>
+	<a href="add_listing_buy.jsp">Buy Something</a>
 	<a href="see_listings.jsp">Status</a>
 	<a href="add_wishlist.jsp">Available to buy</a>
 	<a href="messages.jsp">Messages</a>
