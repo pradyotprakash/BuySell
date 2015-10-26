@@ -52,8 +52,6 @@ String id = "", name="";
 	}
 	 %>
 <body>
-	
-	Welcome <% out.println(name); %>!<br>
 	<%@include file="header" %>
 	
 	

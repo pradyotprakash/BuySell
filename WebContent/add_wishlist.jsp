@@ -3,9 +3,12 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="database.AccessDatabase" %>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%	
-	String id = "", name;
+	String id = "", name="";
 	if(session.getAttribute("user_logged_in") == null){
 		out.println("<script>window.location.assign('index.jsp')</script>");
 	}
@@ -21,13 +24,6 @@
 		}
 	}
 %>
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>See Listings</title>
 <script>
 	function toggle_div_display(div_id){
 		var x = document.getElementById("item" + div_id);
@@ -78,6 +74,7 @@
 			return false;
 	}
 </script>
+<title>See Listings</title>
 </head>
 
 <body>

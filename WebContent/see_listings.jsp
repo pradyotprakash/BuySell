@@ -8,11 +8,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- CORE CSS-->    
+    <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
+    <!--materialize js-->
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <title>See Listings</title>
 </head>
 <%	
-	String id = "", name;
+	String id = "", name="";
 	if(session.getAttribute("user_logged_in") == null){
 		out.println("<script>window.location.assign('index.jsp')</script>");
 	}
@@ -26,27 +44,30 @@
 
 <body>
 	<%@include file="header" %>
+	<br>
 <%
 	ResultSet rs = AccessDatabase.GetSellingListing(id);
 	if(rs == null){
 		out.println("No listings so far by you!<br>");
 	}
 	else{
-		out.print("<table border='2'>\n\t<tr>\n\t\t");
-		out.print("<td>Sl. No.</td>\n\t\t");
-		out.print("<td>Item name</td>\n\t\t");
-		out.print("<td>Item id</td>\n\t\t");
-		out.print("<td>Item description</td>\n\t\t");
-		out.print("<td>Category</td>\n\t\t");
-		out.print("<td>Posted on</td>\n\t\t");
-		out.print("<td>Quantity Remaining</td>\n\t\t");
-		out.print("<td>Price</td>\n\t\t");
-		out.print("<td>User_id</td>\n\t\t");
-		out.print("<td>User_name</td>\n\t\t");
-		out.print("<td>Quantity demanded</td>\n\t\t");
-		out.print("<td>Message</td>\n\t\t");
-		out.print("<td>Action</td>\n\t\t");
+		out.print("<div class='col s12 m8 l9'>");
+		out.print("<table class='centered bordered'>\n\t<thead>\n\t<tr>\n\t\t");
+		out.print("<th>Sl. No.</th>\n\t\t");
+		out.print("<th>Item name</th>\n\t\t");
+		out.print("<th>Item id</th>\n\t\t");
+		out.print("<th>Item description</th>\n\t\t");
+		out.print("<th>Category</th>\n\t\t");
+		out.print("<th>Posted on</th>\n\t\t");
+		out.print("<th>Quantity Remaining</th>\n\t\t");
+		out.print("<th>Price</th>\n\t\t");
+		out.print("<th>User_id</th>\n\t\t");
+		out.print("<th>User_name</th>\n\t\t");
+		out.print("<th>Quantity demanded</th>\n\t\t");
+		out.print("<th>Message</th>\n\t\t");
+		out.print("<th>Action</th>\n\t</tr>\n\t</thead>\t");
 		int count = 1;
+		out.print("<tbody>");
 		while(rs.next()){
 			
 			out.print("<tr>\n\t\t");
@@ -66,7 +87,7 @@
 			out.print("<form action='process.jsp' method='post'> ");
 			out.print("<input name=\"type_of\" type=\"hidden\" value=\"sell_item\">");
 			out.println("<input type='hidden' name='owner' value='"+session.getAttribute("username").toString()+"'><br>");
-			out.print("<button type='submit' >Sell</button>");
+			out.print("<button type='submit' class='btn waves-effect waves-light col s12'>Sell</button>");
 			out.println("<input type='hidden' name='buyer' value='" + rs.getString(11) + "'><br>");
 			out.println("<input type='hidden' name='id' value='" + rs.getString(1) + "'><br>");
 			out.println("<input type='hidden' name='quantity' value='" + rs.getString(13) + "'><br>");
@@ -75,8 +96,9 @@
 			out.print("</tr>\n\t");
 			count++;
 		}
+		out.print("</tbody>");
 		out.println("</table>");
-		
+		out.println("</div>");		
 	}
 	
 %>

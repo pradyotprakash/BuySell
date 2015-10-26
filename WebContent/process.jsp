@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <%
-	String id = "", name;
+	String id = "", name="";
 	boolean logged_in = false;
 	if(session.getAttribute("user_logged_in") == null){
 		out.println("<script>window.location.assign('index.jsp')</script>");

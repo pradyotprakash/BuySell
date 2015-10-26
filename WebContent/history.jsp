@@ -5,12 +5,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- CORE CSS-->    
+    <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
+    <!--materialize js-->
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <title>Inventory</title>
 </head>
 
 <%	
-	String id = "", name;
+	String id = "", name="";
 	if(session.getAttribute("user_logged_in") == null){
 		out.println("<script>window.location.assign('index.jsp')</script>");
 	}
@@ -29,7 +47,7 @@
 
 <body>
 <%@ include file="header" %>
-	Your transaction history as a seller:<br>
+	<p class="caption">Your transaction history as a seller:</p>
 <%
 	ResultSet rs = AccessDatabase.GetTransactionHistoryAsSeller(id);
 	if(!rs.isBeforeFirst()){
@@ -37,16 +55,20 @@
 	}
 	else{
 %>
-	<table border="2">
+	<div class='col s12 m8 l9'>
+	<table class='centered bordered'>
+		<thead>
 		<tr>
-			<td>Sl. No.</td>
-			<td>Item id </td>
-			<td>Buyer</td>
-			<td>Price</td>
-			<td>Quantity</td>
-			<td>Time</td>
-			<td>Comments</td>
+			<th>Sl. No.</th>
+			<th>Item id </th>
+			<th>Buyer</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Time</th>
+			<th>Comments</th>
 		</tr>
+		</thead>
+		<tbody>
 <%
 		int count = 1;
 		
@@ -60,14 +82,17 @@
 			out.println("<td>" + rs.getTimestamp(7) + "</td>");
 			out.println("<td>" + rs.getString(6) + "</td>");
 			out.println("</tr>");
+			count++;
 		}
 %>
+		</tbody>
 	</table>
+	</div>
 <%
 	}
 %>
 	<br><br>
-	Your transaction history as a buyer:<br>
+	<p class="caption">Your transaction history as a buyer:</p>
 <%
 	rs = AccessDatabase.GetTransactionHistoryAsBuyer(id);
 	if(!rs.isBeforeFirst()){
@@ -75,16 +100,20 @@
 	}
 	else{
 %>
-	<table border="2">
+	<div class='col s12 m8 l9'>
+	<table class='centered bordered'>
+		<thead>
 		<tr>
-			<td>Sl. No.</td>
-			<td>Item name</td>
-			<td>Seller</td>
-			<td>Price</td>
-			<td>Quantity</td>
-			<td>Time</td>
-			<td>Comments</td>
+			<th>Sl. No.</th>
+			<th>Item id </th>
+			<th>Buyer</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Time</th>
+			<th>Comments</th>
 		</tr>
+		</thead>
+		<tbody>
 <%
 		int count = 1;
 		
@@ -98,9 +127,12 @@
 			out.println("<td>" + rs.getTimestamp(7) + "</td>");
 			out.println("<td>" + rs.getString(6) + "</td>");
 			out.println("</tr>");
+			count++;
 		}
 %>
+		</tbody>
 	</table>
+	</div>
 <%
 	}
 %>

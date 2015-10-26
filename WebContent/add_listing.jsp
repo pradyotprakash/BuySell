@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- CORE CSS-->    
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -26,7 +26,7 @@
 </head>
 <body>
 <%
-String id = "", name;
+String id = "", name="";
 if(session.getAttribute("user_logged_in") == null){
 	out.println("<script>window.location.assign('index.jsp')</script>");
 }
@@ -47,20 +47,68 @@ else{
 <%
 	if(session.getAttribute("item_sell_insert") != null){
 		if(session.getAttribute("item_sell_insert").equals("true")){
-			out.println("Listing added successfully! Add more below<br>");
+			out.println("<script>$(document).ready(function(){$('#myModal').openModal();});</script>");
+			session.setAttribute("item_sell_insert",null);
 		}
-		else out.println("Could not add listing! Try again!<br>");
+		else {
+			out.println("<script>$(document).ready(function(){$('#myModal1').openModal();});</script>");
+			session.setAttribute("item_sell_insert",null);
+		}
 	}
 %>
-	<form method="post" class="login-form" action="process.jsp">
-		<input name="type_of" class="input-field col s12" type="hidden" value="add_listing">
-		<input type="text" class="input-field col s12" name="item_name" required placeholder="Name of item"><br>
-		<textarea name="item_description" class="input-field col s12" required placeholder="Item description"></textarea><br>
-		<input type="number" class="input-field col s12" name="item_quantity" required placeholder="Quantity to sell"><br>
-		<input type="number" class="input-field col s12" name="item_price" required placeholder="Price"><br>
-		<input type="text" class="input-field col s12" name="item_category" required placeholder="Category"><br>
-		<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>
-		
-	</form>
+	<div id="myModal" class="modal">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	        <h4 class="modal-title">Instructions</h4>
+	        <p>Listing added successfully! Add more below.</p>
+	    </div>
+	    <div class="modal-footer">
+	    	<button type="button" class="btn waves-effect btn-flat modal-action modal-close">Close</button>
+	    </div>
+	</div>
+	
+	<div id="myModal1" class="modal">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	        <h4 class="modal-title">Instructions</h4>
+	        <p>Could not add listing! Try again!</p>
+	    </div>
+	    <div class="modal-footer">
+	    	<button type="button" class="btn waves-effect btn-flat modal-action modal-close">Close</button>
+	    </div>
+	</div>
+	
+	<div class="col s12 m8 l9">
+		<div class="row">
+			<form method="post" class="login-form" action="process.jsp">
+				<div class="input-field col s12">
+					<input name="type_of" type="hidden" value="add_listing">
+				</div>
+				<div class="input-field col s12">
+					<input type="text" name="item_name" required>
+					<label for="name">Name of item</label>
+				</div>
+				<div class="input-field col s12">
+					<textarea name="item_description" class="materialize-textarea" length="120" required></textarea>
+					<label for="description">Item description</label>
+				</div>
+				<div class="input-field col s12">
+					<input type="number" name="item_quantity" required min="1">
+					<label for="quantity">Quantity to sell</label>
+				</div>
+				<div class="input-field col s12">
+					<input type="number" name="item_price" required min="1">
+					<label for="price">Price</label>
+				</div>
+				<div class="input-field col s12">
+					<input type="text" name="item_category" required>
+					<label for="category">Category</label>
+				</div>
+				<div class="input-field col s6">
+					<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
