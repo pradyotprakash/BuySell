@@ -4,6 +4,24 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- CORE CSS-->    
+    <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
+    <!--materialize js-->
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <title>Insert title here</title>
 </head>
 <%	
@@ -34,10 +52,20 @@
 	}
 %>
 <body>
-	<form method="post" action="process.jsp">
+	<form method="post" class="col s12" action="process.jsp">
 		<input name="type_of" type="hidden" value="add_message">
-		<input type="text" name="message_text"><br>
-		<input type="submit" value="Chat">
+		<div class="row">
+			<div class="input-field col s12">
+				<i class="mdi-communication-chat prefix"></i>
+				<textarea name="message_text" class="materialize-textarea" required></textarea>
+				 <label for="textarea1">Message</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<button type="submit" value="Chat" class="btn waves-effect waves-light col s4 right">Chat<i class="mdi-communication-send right"></i></button>
+			</div>
+		</div>
 	</form>
 </body>
 </html>

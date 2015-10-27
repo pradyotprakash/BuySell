@@ -67,7 +67,7 @@
 			String orderList = request.getParameter("order_list");
 			int count = orderList.length() - orderList.replace(",", "").length();
 			if(orderList.length() == 0 || count==0){
-				session.setAttribute("wishlist_updated", "true");
+				session.setAttribute("wishlist_updated", "false");
 				out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
 				System.out.println("YOYO " + orderList);
 			}

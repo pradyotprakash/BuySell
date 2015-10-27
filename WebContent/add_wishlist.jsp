@@ -7,6 +7,23 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
+    <!--materialize js-->
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 <%	
 	String id = "", name="";
 	if(session.getAttribute("user_logged_in") == null){
@@ -68,6 +85,7 @@
 				}
 			}
 			document.getElementsByName('order_list')[0].value = selected;
+			alert(selected);
 			return true;
 		}
 		else 
@@ -100,7 +118,8 @@
 	else{
 		%>
 		<hr>
-		<form action="process.jsp" method="post" onsubmit="return verify()">
+		<div class="card-panel">
+		<form action="process.jsp" class="col s12" method="post" onsubmit="return verify()">
 		<input name="type_of" type="hidden" value="sell_wishlist">
 		<%
 	
@@ -113,7 +132,7 @@
 			out.print("<span>Posted on: " + rs.getTimestamp(10) + "</span><br>\n\t");
 			out.print("<span id='q" + count + "'>Quantity remaining: " + rs.getInt(8) + "</span><br>\n\t");
 			out.print("<span>Price: " + rs.getInt(9) + "</span><br>\n\t");
-			out.println("<button id= 'b" + count + "' type='button' onclick='toggle_div_display(" + count + ")'>Buy this</button><br>");
+			out.println("<button id= 'b" + count + "' type='button' onclick='toggle_div_display(" + count + ")' class='btn waves-effect waves-light col s12'>Buy this</button><br>");
 			out.println("</div>");
 			/* 
 			ArrayList<String> al = userWishlistInfo.get(rs.getString(1)); 
@@ -129,16 +148,15 @@
 			out.println("<div id='item" + count + "' style='display:none'>");
 			out.println("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>");
 			out.println("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>");
-			out.println("<textarea name='item" + count + "_specification' placeholder='Message' value='specs'></textarea><br>");
-			out.println("<input type='number' name='item" + count + "_quantity'>");
+			out.println("<div class='row'><div class='input-field col s12'><i class='mdi-action-question-answer prefix'></i><textarea name='item" + count + "_specification'  class='materialize-textarea'></textarea><label for='message'>Message</label></div></div>");
+			out.println("<div class='row'><div class='input-field col s12'><i class='mdi-content-add-box prefix'></i><input type='number' name='item" + count + "_quantity'><label for='quantity'>Quantity</label></div></div>");
 			out.println("</div>");
-			out.println("<hr>");
 			count++; 
 		}
 		
 		out.println("<input type='hidden' name='order_list'><br>");
-		out.println("<input type='submit' value='Submit'>");
-		out.println("</form>"); 
+		out.println("<div class='row'><div class='input-field col s2 right'><button type='submit' value='Submit' class='btn waves-effect waves-light col s12'>Submit<i class='mdi-content-send right'></i></button></div></div>");
+		out.println("</form></div>"); 
 	}
 	
 %>
