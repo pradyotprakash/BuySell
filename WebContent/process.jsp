@@ -22,25 +22,27 @@
 			name = session.getAttribute("username").toString();
 		logged_in = true;
 	}
-	
-
+	System.out.println(request.getParameter("item_name"));
 	if(logged_in && request.getParameter("type_of") != null){
 		String type = request.getParameter("type_of");
 		if(type.equals("add_listing")){
 			String item_name = request.getParameter("item_name");
 			String item_description = request.getParameter("item_description");
 			String item_category = request.getParameter("item_category");
-			
+						
 			int item_price = Integer.parseInt(request.getParameter("item_price"));
 			int item_quantity = Integer.parseInt(request.getParameter("item_quantity"));
-
 			
 			// execute insert
 			boolean success = UpdateDatabase.AddSellingListing(id, item_name, item_description, item_category, item_price, item_quantity);
 			if(success){
 				session.setAttribute("item_sell_insert", "true");
 			}
-			else session.setAttribute("item_sell_insert", "false");
+			else{
+				session.setAttribute("item_sell_insert", "false");
+			}
+			System.out.println(type);
+
 			out.println("<script>window.location.assign('add_listing.jsp')</script>");
 		}
 		else if(type.equals("add_listing_buy")){
@@ -66,10 +68,9 @@
 			
 			String orderList = request.getParameter("order_list");
 			int count = orderList.length() - orderList.replace(",", "").length();
-			if(orderList.length() == 0 || count==0){
+			if(orderList.length() == 0 || count == 0){
 				session.setAttribute("wishlist_updated", "false");
 				out.println("<script>window.location.assign('add_wishlist.jsp')</script>");
-				System.out.println("YOYO " + orderList);
 			}
 			else{
 				String[] entriesToUpdate = orderList.split(",");

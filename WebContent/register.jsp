@@ -3,6 +3,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="database.Session" %>
 <%@ page import="database.Register" %>
+<%@ page import="javax.servlet.http.Part" %>
+<%@ page import="java.io.*" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,10 +32,27 @@
 	String email = request.getParameter("email");
 	String passwd = request.getParameter("passwd");
 	
+	InputStream inputStream = null; // input stream of the upload file
+    
+    // obtains the upload file part in this multipart request
+    Part filePart = request.getPart("photo");
+    if (filePart != null) {
+        // prints out some information for debugging
+        System.out.println(filePart.getName());
+        System.out.println(filePart.getSize());
+        System.out.println(filePart.getContentType());
+         
+        // obtains input stream of the upload file
+        inputStream = filePart.getInputStream();
+    }
+	
+	
+	
+	
 	if(id != null || name != null || email != null || passwd != null)
 		firstTime = false;
 	if(!firstTime){
-		status = Register.register(id, name, email, passwd);
+		status = Register.register(id, name, email, passwd, inputStream);
 		if(status == 0){
 			session.setAttribute("registered", "true");
 			out.println("<script>window.location.assign('index.jsp')</script>");
@@ -97,6 +116,13 @@
 	            					<i class="mdi-action-lock-outline prefix"></i>
 	            					<input id="re_password" name="re_passwd" type="password" required>
 	            					<label for="re_password">Retype Password</label>
+	          					</div>
+	        				</div>
+	        				<div class="row">
+	          					<div class="input-field col s12">
+	            					<i class="mdi-action-lock-outline prefix"></i>
+	            					<input type="file" name="photo" required>
+									<label for="category">Image</label>
 	          					</div>
 	        				</div>
 	        				<div class="row">

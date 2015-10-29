@@ -40,10 +40,10 @@
 			String message = p.second;
 			if(b){
 				// should appear to the right, facebook style
-				out.println("<div align='right'>" + message + "</div?<br>");
+				out.println("<div align='right'>" + message + "</div><br>");
 			}
 			else{
-				out.println("<div align='left'>" + message + "</div?<br>");
+				out.println("<div align='left'>" + message + "</div><br>");
 			}
 		}
 		

@@ -8,6 +8,28 @@ import java.util.TreeSet;
 
 public class AccessDatabase {
 	
+	public static ResultSet GetProfileData(String id){
+		
+		Connection connection = null;
+		ResultSet rs = null;
+		
+		try{
+			connection = getConnection();
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from login_data where id=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();	
+			
+		
+		} catch(SQLException sqle){
+			System.out.println("SQL exception! in GetSellingList " + sqle);
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return rs;
+		
+	}
 	public static ResultSet GetSellingListing(String id){
 		
 		boolean flag = false;
@@ -17,7 +39,7 @@ public class AccessDatabase {
 		try{
 			connection = getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("select * from (items natural join item_sell) join (item_sell_wishlist natural join login_data) using (item_id) where items.id=?");
+			PreparedStatement pstmt = connection.prepareStatement("select * from (items natural join item_sell) left outer join (item_sell_wishlist natural join login_data) using (item_id) where items.id=?");
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();	
 			/*select items.name, items.descritpion, items.category, item_sell.quantity, items.price, login_data.name from items natural join item_sell natural join login_data where id=?*/
@@ -45,12 +67,55 @@ public class AccessDatabase {
 			rs = pstmt.executeQuery();
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			sqle.printStackTrace();
+			System.out.println("SQL exception in Get_items_on_sale!");
 		} finally{
 			closeConnection(connection);
 		}
 		
 		return rs;
+	}
+	
+	public static ResultSet AllItemsFromItemBuy(){
+		
+		Connection connection = null;
+		ResultSet rs = null;
+		
+		try{
+			connection = getConnection();
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from item_buy natural join items");
+			rs = pstmt.executeQuery();
+					
+		} catch(SQLException sqle){
+			System.out.println("SQL exception in AllItemsFromItemBuy!");
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return rs;	
+	}
+	
+	public static ResultSet AllItemsFromItemBuy(String id){
+		
+		Connection connection = null;
+		ResultSet rs = null;
+		
+		try{
+			connection = getConnection();
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from item_buy natural join items where id=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+					
+		} catch(SQLException sqle){
+			System.out.println("SQL exception in AllItemsFromItemBuy!");
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return rs;
+		
 	}
 	
 	public static ArrayList<String> GetItemsInWishlistForUser(String id){
@@ -70,7 +135,7 @@ public class AccessDatabase {
 			}
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception in GetItemsInWishlistForUser!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -87,7 +152,7 @@ public class AccessDatabase {
 		try{
 			connection = getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("select item_id, specifications, quantity, price_range, comments from item_wishlist where id=?");
+			PreparedStatement pstmt = connection.prepareStatement("select item_id, message, quantity from item_sell_wishlist where id=?");
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -95,13 +160,12 @@ public class AccessDatabase {
 				ArrayList<String> al = new ArrayList<String>();
 				al.add(rs.getString(2));
 				al.add(Integer.toString(rs.getInt(3)));
-				al.add(rs.getString(4));
-				al.add(rs.getString(5));
 				hm.put(rs.getString(1), al);
 			}
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			sqle.printStackTrace();
+			System.out.println("SQL exception in GetAlreadyMarkedForBuyingListing!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -123,7 +187,7 @@ public class AccessDatabase {
 			rs = pstmt.executeQuery();
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception in GetTransactionHistoryAsSeller!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -141,12 +205,12 @@ public class AccessDatabase {
 			connection = getConnection();
 			
 			PreparedStatement pstmt = connection.prepareStatement
-					("select* from transaction_history where buyer=?;");
+					("select * from transaction_history where buyer=?;");
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception in GetTransactionHistoryAsBuyer!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -174,7 +238,7 @@ public class AccessDatabase {
 			}
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception in GetName!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -201,7 +265,7 @@ public class AccessDatabase {
 			}
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception ListOfAllUsers!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -241,7 +305,7 @@ public class AccessDatabase {
 			}
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception in GetAllMessagesBetweenAPair!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -249,7 +313,6 @@ public class AccessDatabase {
 		return ts;
 		
 	}
-	
 	
 	static Connection getConnection() {
 		String dbURL = "jdbc:postgresql://10.105.1.12/cs387";

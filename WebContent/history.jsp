@@ -50,6 +50,7 @@
 	<p class="caption">Your transaction history as a seller:</p>
 <%
 	ResultSet rs = AccessDatabase.GetTransactionHistoryAsSeller(id);
+		
 	if(!rs.isBeforeFirst()){
 		out.println("No records!<br>");
 	}
@@ -60,7 +61,7 @@
 		<thead>
 		<tr>
 			<th>Sl. No.</th>
-			<th>Item id </th>
+			<th>Item name </th>
 			<th>Buyer</th>
 			<th>Price</th>
 			<th>Quantity</th>
@@ -94,7 +95,10 @@
 	<br><br>
 	<p class="caption">Your transaction history as a buyer:</p>
 <%
+	rs = null;
 	rs = AccessDatabase.GetTransactionHistoryAsBuyer(id);
+	ResultSetMetaData rsmd = rs.getMetaData();
+
 	if(!rs.isBeforeFirst()){
 		out.println("No records!<br>");
 	}
@@ -105,7 +109,7 @@
 		<thead>
 		<tr>
 			<th>Sl. No.</th>
-			<th>Item id </th>
+			<th>Item name </th>
 			<th>Buyer</th>
 			<th>Price</th>
 			<th>Quantity</th>

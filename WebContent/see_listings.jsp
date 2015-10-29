@@ -47,10 +47,11 @@
 	<br>
 <%
 	ResultSet rs = AccessDatabase.GetSellingListing(id);
-	if(rs == null){
-		out.println("No listings so far by you!<br>");
+	if(!rs.isBeforeFirst()){
+		out.println("You are not selling anything now!<br>");
 	}
 	else{
+		out.println("Things you are selling at present:<br>");
 		out.print("<div class='col s12 m8 l9'>");
 		out.print("<table class='centered bordered'>\n\t<thead>\n\t<tr>\n\t\t");
 		out.print("<th>Sl. No.</th>\n\t\t");
@@ -83,24 +84,64 @@
 			out.print("<td id='user_name"+ count + "'>" + rs.getString(14) + "</td>\n\t\t");
 			out.print("<td id='quanity_demand"+ count + "'>" + rs.getInt(13) + "</td>\n\t\t");
 			out.print("<td id='mess"+ count + "'>" + rs.getString(12) + "</td>\n\t\t");
-			out.print("<td>");
-			out.print("<form action='process.jsp' method='post'> ");
-			out.print("<input name=\"type_of\" type=\"hidden\" value=\"sell_item\">");
-			out.println("<input type='hidden' name='owner' value='"+session.getAttribute("username").toString()+"'><br>");
-			out.print("<button type='submit' class='btn waves-effect waves-light col s12'>Sell</button>");
-			out.println("<input type='hidden' name='buyer' value='" + rs.getString(11) + "'><br>");
-			out.println("<input type='hidden' name='id' value='" + rs.getString(1) + "'><br>");
-			out.println("<input type='hidden' name='quantity' value='" + rs.getString(13) + "'><br>");
-			out.println("</form>");
-			out.print("</td>\n\t\t");
+			
+			if(rs.getString(11) != null){
+				out.print("<td>");
+				out.print("<form action='process.jsp' method='post'> ");
+				out.print("<input name=\"type_of\" type=\"hidden\" value=\"sell_item\">");
+				out.println("<input type='hidden' name='owner' value='"+session.getAttribute("username").toString()+"'><br>");
+				out.print("<button type='submit' class='btn waves-effect waves-light col s12'>Sell</button>");
+				out.println("<input type='hidden' name='buyer' value='" + rs.getString(11) + "'><br>");
+				out.println("<input type='hidden' name='id' value='" + rs.getString(1) + "'><br>");
+				out.println("<input type='hidden' name='quantity' value='" + rs.getString(13) + "'><br>");
+				out.println("</form>");
+				out.print("</td>\n\t\t");
+			}			
 			out.print("</tr>\n\t");
 			count++;
 		}
 		out.print("</tbody>");
 		out.println("</table>");
-		out.println("</div>");		
+		out.println("</div>");	
+		out.println("<br><hr>");
 	}
 	
-%>
+		rs = AccessDatabase.AllItemsFromItemBuy(id);
+		int count = 1;
+				
+		if(!rs.isBeforeFirst()){
+			out.println("You don't wish to buy any items not already here!");
+		}
+		else{
+			out.println("Things you wish to buy and are not already on this website:<br>");
+	%>
+	
+	<table>
+		<tr>
+			<td>Sl. No.</td>
+			<td>Item name</td>
+			<td>Quantity demanded</td>
+			<td>Price range</td>
+			<td>Category</td>
+			<td>Description</td>
+			<td>Comments</td>
+		</tr>
+	<%
+			while(rs.next()){
+				out.println("<tr>");
+				out.println("<td>" + count + "</td>");
+				count++;
+				out.println("<td>" + rs.getString(8) + "</td>");
+				out.println("<td>" + rs.getString(3) + "</td>");
+				out.println("<td>" + rs.getString(4) + "</td>");
+				out.println("<td>" + rs.getString(10) + "</td>");
+				out.println("<td>" + rs.getString(9) + "</td>");
+				out.println("<td>" + rs.getString(6) + "</td>");
+				out.println("</tr>");
+				
+			}
+			out.println("</table>");
+		}
+	%>
 </body>
 </html>

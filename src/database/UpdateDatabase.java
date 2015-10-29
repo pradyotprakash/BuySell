@@ -6,7 +6,7 @@ public class UpdateDatabase {
 	
 	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, 
 			int item_price, int item_quantity){
-		
+		System.out.println("9090");
 		boolean flag = false;
 		Connection connection = null;
 		int i = 0;
@@ -173,7 +173,7 @@ public class UpdateDatabase {
 			flag = true;
 		
 		} catch(SQLException sqle){
-			System.out.println("SQL exception!");
+			System.out.println("SQL exception in InsertMessageIntoDatabase!");
 		} finally{
 			closeConnection(connection);
 		}
@@ -184,118 +184,126 @@ public class UpdateDatabase {
 	public static boolean UpdateWishlist(String id, String itemid, String str_quantity, 
 		String owner, String pricerange, String comment, String specification){
 	
-	boolean flag = false;
-	Connection connection = null;
-	
-	int quantity = Integer.parseInt(str_quantity);	
-	try{
-		connection = getConnection();
-		connection.setAutoCommit(false);
-		PreparedStatement pstmt = null;
-		if(quantity == 0){
-			pstmt = connection.prepareStatement("delete from item_wishlist where id=? and item_id=?");
-			pstmt.setString(1, id);
-			pstmt.setString(2, itemid);
-			pstmt.executeUpdate();
+		boolean flag = false;
+		Connection connection = null;
+		
+		int quantity = Integer.parseInt(str_quantity);	
+		try{
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			PreparedStatement pstmt = null;
+			if(quantity == 0){
+				pstmt = connection.prepareStatement("delete from item_wishlist where id=? and item_id=?");
+				pstmt.setString(1, id);
+				pstmt.setString(2, itemid);
+				pstmt.executeUpdate();
+				
+				pstmt = connection.prepareStatement("update item_sell set interested_buyers = (select array_remove(interested_buyers,?) from item_sell where id=? and item_id=?) where id=? and item_id=?");
+				pstmt.setString(1, id);
+				pstmt.setString(2, owner);
+				pstmt.setString(3, itemid);
+				pstmt.setString(4, owner);
+				pstmt.setString(5, itemid);
+				pstmt.executeUpdate();
+				
+				connection.commit();
+			}
+			else{
 			
-			pstmt = connection.prepareStatement("update item_sell set interested_buyers = (select array_remove(interested_buyers,?) from item_sell where id=? and item_id=?) where id=? and item_id=?");
+				pstmt = connection.prepareStatement
+						("update item_wishlist set quantity=?, price_range=?, specifications=?, comments=?, time_=now() where id=? and item_id=?");
+				
+				pstmt.setInt(1, quantity);
+				pstmt.setString(2, pricerange);
+				pstmt.setString(3, specification);
+				pstmt.setString(4, comment);
+				pstmt.setString(5, id);
+				pstmt.setString(6, itemid);
+				pstmt.executeUpdate();
+				
+				connection.commit();
+			}
+		
+			flag = true;
+		
+		} catch(SQLException sqle){
+			System.out.println("SQL exception in UpdateWishlist!");
+		} finally{
+			closeConnection(connection);
+		}
+	
+		return flag;
+	}
+
+	public static boolean AddToSellWishlist(String id, String itemid, String specification, Integer quantity){
+		
+		boolean flag = false;
+		Connection connection = null;
+			
+		try{
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			
+			PreparedStatement pstmt = connection.prepareStatement("select count(*) from item_sell_wishlist where id=? and item_id=?");
+			pstmt.setInt(2, Integer.parseInt(itemid));
 			pstmt.setString(1, id);
-			pstmt.setString(2, owner);
-			pstmt.setString(3, itemid);
+			ResultSet rs = pstmt.executeQuery();
+			Integer count=0;
+			while(rs.next()) {
+				count=rs.getInt(1);
+			}
+			
+			if(count!=0) {
+				if(quantity != 0){
+					pstmt = connection.prepareStatement("update item_sell_wishlist set message=?, quantity=? where id=? and item_id=?");
+					pstmt.setInt(2, quantity);
+					pstmt.setInt(4, Integer.parseInt(itemid));
+					pstmt.setString(3, id);
+					pstmt.setString(1, specification);
+					pstmt.executeUpdate();
+				}
+				else{
+					pstmt = connection.prepareStatement("delete from item_sell_wishlist where id=? and item_id=?");
+					pstmt.setInt(2, Integer.parseInt(itemid));
+					pstmt.setString(1, id);
+					pstmt.executeUpdate();
+				}
+	
+			}
+			else {
+				PreparedStatement pstmt1 = connection.prepareStatement("insert into item_sell_wishlist values(?,?,?,?)");			
+				pstmt1.setInt(1, Integer.parseInt(itemid));
+				pstmt1.setString(2, id);
+				pstmt1.setString(3, specification);
+				pstmt1.setInt(4, quantity);
+				
+				pstmt1.executeUpdate();
+			}
+			/*pstmt = connection.prepareStatement("select no_of_interested_buyers from item_sell where id=? and item_id=?");
+			pstmt.setString(1, owner);
+			pstmt.setString(2, itemid);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			int c = rs.getInt(1);
+			
+			pstmt = connection.prepareStatement("update item_sell set interested_buyers[?] = ?, no_of_interested_buyers=? where id=? and item_id=?");
+			pstmt.setInt(1, c);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, c+1);
 			pstmt.setString(4, owner);
 			pstmt.setString(5, itemid);
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();*/
 			
 			connection.commit();
-		}
-		else{
-		
-			pstmt = connection.prepareStatement
-					("update item_wishlist set quantity=?, price_range=?, specifications=?, comments=?, time_=now() where id=? and item_id=?");
+			flag = true;
 			
-			pstmt.setInt(1, quantity);
-			pstmt.setString(2, pricerange);
-			pstmt.setString(3, specification);
-			pstmt.setString(4, comment);
-			pstmt.setString(5, id);
-			pstmt.setString(6, itemid);
-			pstmt.executeUpdate();
-			
-			connection.commit();
+		} catch(SQLException sqle){
+			System.out.println("SQL exception in AddToSellWishlist" + sqle);
+		} finally{
+			closeConnection(connection);
 		}
-	
-		flag = true;
-		
-	} catch(SQLException sqle){
-		System.out.println("SQL exception!");
-	} finally{
-		closeConnection(connection);
+		return flag;
 	}
-	
-	return flag;
-}
-
-public static boolean AddToSellWishlist(String id, String itemid, String specification, Integer quantity){
-	
-	boolean flag = false;
-	Connection connection = null;
-		
-	try{
-		connection = getConnection();
-		connection.setAutoCommit(false);
-		
-		PreparedStatement pstmt = connection.prepareStatement("select count(*) from item_sell_wishlist where id=? and item_id=?");
-		pstmt.setInt(2, Integer.parseInt(itemid));
-		pstmt.setString(1, id);
-		ResultSet rs = pstmt.executeQuery();
-		Integer count=0;
-		while(rs.next()) {
-			count=rs.getInt(1);
-		}
-		
-		if(count!=0) {
-			pstmt = connection.prepareStatement("update item_sell_wishlist set message=?, quantity=? where id=? and item_id=?");
-			pstmt.setInt(2, quantity);
-			pstmt.setInt(4, Integer.parseInt(itemid));
-			pstmt.setString(3, id);
-			pstmt.setString(1, specification);
-			pstmt.executeUpdate();
-
-		}
-		else {
-			PreparedStatement pstmt1 = connection.prepareStatement("insert into item_sell_wishlist values(?,?,?,?)");			
-			pstmt1.setInt(1, Integer.parseInt(itemid));
-			pstmt1.setString(2, id);
-			pstmt1.setString(3, specification);
-			pstmt1.setInt(4, quantity);
-			
-			pstmt1.executeUpdate();
-		}
-		/*pstmt = connection.prepareStatement("select no_of_interested_buyers from item_sell where id=? and item_id=?");
-		pstmt.setString(1, owner);
-		pstmt.setString(2, itemid);
-		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		int c = rs.getInt(1);
-		
-		pstmt = connection.prepareStatement("update item_sell set interested_buyers[?] = ?, no_of_interested_buyers=? where id=? and item_id=?");
-		pstmt.setInt(1, c);
-		pstmt.setString(2, id);
-		pstmt.setInt(3, c+1);
-		pstmt.setString(4, owner);
-		pstmt.setString(5, itemid);
-		pstmt.executeUpdate();*/
-		
-		connection.commit();
-		flag = true;
-		
-	} catch(SQLException sqle){
-		System.out.println("SQL exception in AddToSellWishlist" + sqle);
-	} finally{
-		closeConnection(connection);
-	}
-	return flag;
-}
 	
 	static Connection getConnection() {
 		String dbURL = "jdbc:postgresql://10.105.1.12/cs387";

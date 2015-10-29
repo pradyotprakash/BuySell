@@ -8,6 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/home/sivaprasad/Desktop/db/BuySell/WebContent/WEB-INF/lib/postgresql-9.3-1103.jdbc4.jar"/>
+	<classpathentry kind="lib" path="/home/pradyot/eclipse_workspace/BuySell/WebContent/WEB-INF/lib/postgresql-9.3-1103.jdbc4.jar"/>
+	<classpathentry kind="lib" path="/opt/tomcat7.0/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

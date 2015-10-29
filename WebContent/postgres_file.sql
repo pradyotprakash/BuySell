@@ -15,6 +15,15 @@ create table id_tracker(
 
 insert into id_tracker values('1');
 
+create table user_images(
+	id varchar(20) references login_data(id) on delete cascade,
+	img bytea not null
+);
+
+create table categories(
+	category varchar(50) primary key
+);
+
 create table login_data(
 	id varchar(20),
 	username varchar(20),
@@ -28,7 +37,7 @@ create table items(
 	item_id serial primary key ,
 	name varchar(100) not null,
 	description varchar(1000) not null,
-	category varchar(100) not null,
+	category varchar(100) not null references categories(category),
 	is_biddable char(1) not null,
 	bidding_price numeric(8,2) default 0,
 	check(is_biddable in ('n', 'y'))
@@ -49,8 +58,7 @@ create table item_sell_wishlist (
 	item_id int references item_sell(item_id) on delete cascade,
 	id varchar(20) references login_data(id) on delete cascade,
 	message varchar(1000) not null,
-	quantity integer not null 
-
+	quantity integer not null
 );
 
 create table item_buy(

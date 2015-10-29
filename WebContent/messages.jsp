@@ -83,6 +83,10 @@
 	<section id="content">
 		<div class="container">
 			<div class="section right" style="padding-left:10%;padding-top:10px; width:90%">
+			<%
+				String chattingWith = session.getAttribute("receiver_id").toString();
+				out.println("<span style='color:blue;'>" + chattingWith + "</span><br>");
+			%>
 				<iframe width="800" height="400" src="show_message.jsp" id="message_frame">
 				</iframe>
 				<br>

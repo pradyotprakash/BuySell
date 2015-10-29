@@ -104,6 +104,10 @@ else{
 					<input type="text" name="item_category" required>
 					<label for="category">Category</label>
 				</div>
+				<div class="input-field col s12">
+					<input type="file" name="photo">
+					<label for="category">Image</label>
+				</div>
 				<div class="input-field col s6">
 					<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>
 				</div>

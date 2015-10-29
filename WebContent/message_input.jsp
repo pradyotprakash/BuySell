@@ -57,8 +57,8 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<i class="mdi-communication-chat prefix"></i>
-				<textarea name="message_text" class="materialize-textarea" required></textarea>
-				 <label for="textarea1">Message</label>
+				<input name="message_text" class="materialize-textarea" required/>
+				 <label for="input1">Message</label>
 			</div>
 		</div>
 		<div class="row">

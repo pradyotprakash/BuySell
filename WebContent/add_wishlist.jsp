@@ -58,7 +58,7 @@
 	
 	function verify(){
 		var flag = true;
-		var count = document.getElementsByTagName('div').length/2;
+		var count = document.getElementsByName('entries').length;
 		for(var i=1;i<=count;++i){
 			var x = document.getElementById('q' + i).innerHTML;
 			var y = document.getElementsByName('item' + i + '_quantity')[0].value;
@@ -67,7 +67,7 @@
 				flag = false;
 			}
 			else if (parseInt(y)<0) {
-				document.getElementById('e' + i).innerHTML = "Positive amount please Motherfucker!";
+				document.getElementById('e' + i).innerHTML = "Positive amount please!";
 				flag = false;	
 			}
 			else{
@@ -85,7 +85,6 @@
 				}
 			}
 			document.getElementsByName('order_list')[0].value = selected;
-			alert(selected);
 			return true;
 		}
 		else 
@@ -108,10 +107,10 @@
 			session.removeAttribute("wishlist_updated");	
 		}
 	}
-	
+
 	ResultSet rs = AccessDatabase.Get_items_on_sale(id);
-/* 	HashMap<String, ArrayList<String>> userWishlistInfo = AccessDatabase.GetAlreadyMarkedForBuyingListing(id);
- */	int count = 1;
+ 	HashMap<String, ArrayList<String>> userWishlistInfo = AccessDatabase.GetAlreadyMarkedForBuyingListing(id);
+ 	int count = 1;
 	if(!rs.isBeforeFirst()){
 		out.println("No items currently for sale!<br>");
 	}
@@ -122,38 +121,50 @@
 		<form action="process.jsp" class="col s12" method="post" onsubmit="return verify()">
 		<input name="type_of" type="hidden" value="sell_wishlist">
 		<%
-	
+		StringBuilder sb1 = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+		StringBuilder current = null;
 		while(rs.next()){
-			out.println("<div id='entry'>");
-			out.println("<span id='e" + count + "' style='color:red'></span><br>");
-			out.print("<span>Item name: " + rs.getString(3) + "</span><br>\n\t");
-			out.print("<span>Description: " + rs.getString(4) + "</span><br>\n\t");
-			out.print("<span>Category: " + rs.getString(5) + "</span><br>\n\t");
-			out.print("<span>Posted on: " + rs.getTimestamp(10) + "</span><br>\n\t");
-			out.print("<span id='q" + count + "'>Quantity remaining: " + rs.getInt(8) + "</span><br>\n\t");
-			out.print("<span>Price: " + rs.getInt(9) + "</span><br>\n\t");
-			out.println("<button id= 'b" + count + "' type='button' onclick='toggle_div_display(" + count + ")' class='btn waves-effect waves-light col s12'>Buy this</button><br>");
-			out.println("</div>");
-			/* 
-			ArrayList<String> al = userWishlistInfo.get(rs.getString(1)); 
+			
+			ArrayList<String> al = userWishlistInfo.get(rs.getString(2)); 
 			
 			if(al == null){
 				al = new ArrayList<String>();
 				al.add("");
 				al.add("");
-				al.add("");
-				al.add("");
-			} */
+				current = sb2;
+			}
+			else{
+				current = sb1;
+			}
 			
-			out.println("<div id='item" + count + "' style='display:none'>");
-			out.println("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>");
-			out.println("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>");
-			out.println("<div class='row'><div class='input-field col s12'><i class='mdi-action-question-answer prefix'></i><textarea name='item" + count + "_specification'  class='materialize-textarea'></textarea><label for='message'>Message</label></div></div>");
-			out.println("<div class='row'><div class='input-field col s12'><i class='mdi-content-add-box prefix'></i><input type='number' name='item" + count + "_quantity'><label for='quantity'>Quantity</label></div></div>");
-			out.println("</div>");
+			current.append("<div id='entry' name='entries'>\n");
+			current.append("<span id='e" + count + "' style='color:red'></span><br>\n");
+			current.append("<span>Item name: " + rs.getString(3) + "</span><br>\n\t");
+			current.append("<span>Description: " + rs.getString(4) + "</span><br>\n\t");
+			current.append("<span>Category: " + rs.getString(5) + "</span><br>\n\t");
+			current.append("<span>Posted on: " + rs.getTimestamp(10) + "</span><br>\n\t");
+			current.append("<span id='q" + count + "'>Quantity remaining: " + rs.getInt(8) + "</span><br>\n\t");
+			current.append("<span>Price: " + rs.getInt(9) + "</span><br>\n\t");
+			current.append("<button id= 'b" + count + "' type='button' onclick='toggle_div_display(" + count + ")' class='btn waves-effect waves-light col s12'>Buy this</button><br>\n");
+			current.append("</div>\n");
+			
+			current.append("<div id='item" + count + "' style='display:none'>\n");
+			current.append("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>\n");
+			current.append("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>\n");
+			current.append("<div class='row'><div class='input-field col s12'><i class='mdi-action-question-answer prefix'></i><textarea name='item" + count + "_specification' value='" + al.get(0) + "' class='materialize-textarea'></textarea><label for='message'>Message</label></div></div>\n");
+			current.append("<div class='row'><div class='input-field col s12'><i class='mdi-content-add-box prefix'></i><input type='number' name='item" + count + "_quantity' value='" + al.get(1) + "'><label for='quantity'>Quantity</label></div></div>\n");
+			current.append("</div>\n");
 			count++; 
 		}
 		
+		if(sb1.length() != 0){
+			out.println("Items you wish to buy:<br>");
+			out.println(sb1.toString());
+			out.println("<br><hr>");
+			out.println("Other items on sale:<br>");
+		}
+		out.println(sb2.toString());
 		out.println("<input type='hidden' name='order_list'><br>");
 		out.println("<div class='row'><div class='input-field col s2 right'><button type='submit' value='Submit' class='btn waves-effect waves-light col s12'>Submit<i class='mdi-content-send right'></i></button></div></div>");
 		out.println("</form></div>"); 
