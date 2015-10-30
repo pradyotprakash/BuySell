@@ -93,34 +93,46 @@
 	}
 	
 	function showMe(id) {
-		<%System.out.println("Function called	"); %>
 		var count = document.getElementsByName('entries').length;
-	    var chboxs = document.getElementByID(id);
-	    document.getElementByID('a').innerHTML="I hate my Life";
-		if(chbox.checked == true && count!=0) {
-			document.getElementByID('a').innerHTML="I hate my Life";
+	    var chboxs = document.getElementById(id);
+		if(chboxs.checked == true && count!=0) {
+			document.getElementById('a').innerHTML="I hate my Life";
 		}
 	    for(var i=1;i<=count;i++) { 
-	    	<%System.out.println("Counter"); %>
 	        if(id == 'cat1' && chboxs.checked == true){
-	        	<%System.out.println("Cat1"); %>
-		         var category = document.getElementByID('category'+i).innerHTML;
+		         var category = document.getElementById('category'+i).innerHTML;
 				 if(category=="Category: Electronics") {
 		        	 document.getElementById('entry'+i).style.display = "block";
 		         }
 	        }
+	        if(id == 'cat1' && chboxs.checked == false){
+		         var category = document.getElementById('category'+i).innerHTML;
+				 if(category=="Category: Electronics") {
+		        	 document.getElementById('entry'+i).style.display = "none";
+		         }
+	        }
 	        if(id == "cat2" && chboxs.checked == true){
-	        	<%System.out.println("Cat2"); %>
-		         var category = document.getElementByID('category'+i).innerHTML;
+		         var category = document.getElementById('category'+i).innerHTML;
 		         if(category=="Category: Clothes") {
 		        	 document.getElementById('entry'+i).style.display = "block";
 		         }
 	        }
+	        if(id == "cat2" && chboxs.checked == false){
+		         var category = document.getElementById('category'+i).innerHTML;
+		         if(category=="Category: Clothes") {
+		        	 document.getElementById('entry'+i).style.display = "none";
+		         }
+	        }
 	        if(id == "cat3" && chboxs.checked == true){
-	        	<%System.out.println("Cat3"); %>
-		         var category = document.getElementByID('category'+i).innerHTML;
+		         var category = document.getElementById('category'+i).innerHTML;
 		         if(category!="Category: Clothes" && category!="Category: Electronics") {
 		        	 document.getElementById('entry'+i).style.display = "block";
+		         }
+	        }
+	        if(id == "cat3" && chboxs.checked == false){
+		         var category = document.getElementById('category'+i).innerHTML;
+		         if(category!="Category: Clothes" && category!="Category: Electronics") {
+		        	 document.getElementById('entry'+i).style.display = "none";
 		         }
 	        }
 	    }
