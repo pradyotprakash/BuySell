@@ -19,8 +19,6 @@
     <!-- For iPhone -->
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
-    <!-- For Windows Phone -->
-
 
     <!-- CORE CSS-->    
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -29,11 +27,6 @@
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->    
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
 
 </head>
@@ -58,7 +51,7 @@
 	<%@include file="header" %>
 	
 	<%
-		out.println("Welcome " + name);
+		out.println("<p class='caption'><b>Welcome " + name+"</b></p>");
 		ResultSet rs = AccessDatabase.AllItemsFromItemBuy();
 		int count = 1;
 				
@@ -68,18 +61,22 @@
 		else{
 	%>
 	
-	<h2>Recent demands</h2><br>
-	<table>
+	<p class="caption">Recent demands:</p>
+	<div class='col s12 m8 l9'>
+	<table class='centered bordered'>
+		<thead>
 		<tr>
-			<td>Sl. No.</td>
-			<td>Posted by</td>
-			<td>Item name</td>
-			<td>Quantity demanded</td>
-			<td>Price range</td>
-			<td>Category</td>
-			<td>Description</td>
-			<td>Comments</td>
+			<th>Sl. No.</th>
+			<th>Posted by</th>
+			<th>Item name</th>
+			<th>Quantity demanded</th>
+			<th>Price range</th>
+			<th>Category</th>
+			<th>Description</th>
+			<th>Comments</th>
 		</tr>
+		</thead>
+		<tbody>
 	<%
 			while(rs.next()){
 				out.println("<tr>");
@@ -95,7 +92,7 @@
 				out.println("</tr>");
 				
 			}
-			out.println("</table>");
+			out.println("</tbody></table></div>");
 		}
 	%>
 </body>

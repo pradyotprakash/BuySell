@@ -116,6 +116,10 @@ else{
 	                  <input name="item_category" value="Clothes" type="radio" id="test2" />
 	                  <label for="test2">Clothes</label>
 	                </p>
+	                <p>
+	                  <input name="item_category" value="Others" type="radio" id="test3" />
+	                  <label for="test3">Others</label>
+	                </p>
 	                <br>
 				</div>
 				<div class="input-field col s12">

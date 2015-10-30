@@ -43,6 +43,11 @@ create table items(
 	check(is_biddable in ('n', 'y'))
 );
 
+create table item_image (
+	item_id int references items(item_id) on delete cascade,
+	img bytea
+);
+
 create table item_sell(
 	id varchar(20) references login_data(id) on delete cascade,
 	item_id int references items(item_id) on delete cascade,

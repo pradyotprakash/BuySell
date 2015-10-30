@@ -61,7 +61,7 @@
 		<thead>
 		<tr>
 			<th>Sl. No.</th>
-			<th>Item name </th>
+			<th>Item ID </th>
 			<th>Buyer</th>
 			<th>Price</th>
 			<th>Quantity</th>
@@ -109,8 +109,8 @@
 		<thead>
 		<tr>
 			<th>Sl. No.</th>
-			<th>Item name </th>
-			<th>Buyer</th>
+			<th>Item ID </th>
+			<th>Seller</th>
 			<th>Price</th>
 			<th>Quantity</th>
 			<th>Time</th>

@@ -29,7 +29,8 @@
 			String item_name = request.getParameter("item_name");
 			String item_description = request.getParameter("item_description");
 			String item_category = request.getParameter("item_category");
-						
+			//String photo = request.getParameter("photo");
+			
 			int item_price = Integer.parseInt(request.getParameter("item_price"));
 			int item_quantity = Integer.parseInt(request.getParameter("item_quantity"));
 			

@@ -1,11 +1,14 @@
 package database;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 
 public class UpdateDatabase {
 	
-	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, 
-			int item_price, int item_quantity){
+	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, int item_price, int item_quantity) throws IOException{
 		System.out.println("9090");
 		boolean flag = false;
 		Connection connection = null;
@@ -59,6 +62,14 @@ public class UpdateDatabase {
 			pstmt.setString(2, Integer.toString(i));
 			pstmt.executeUpdate();
 			
+			/*File file = new File(photo);
+			FileInputStream fis = new FileInputStream(file);
+			pstmt = connection.prepareStatement("insert into item_image values ?,?");
+			pstmt.setInt(1, last_inserted);
+			pstmt.setBinaryStream(2, fis, file.length());
+			pstmt.executeUpdate();
+			fis.close();*/
+	
 			connection.commit();
 			
 			flag = true;			
@@ -73,6 +84,10 @@ public class UpdateDatabase {
 				e.printStackTrace();
 			}
 			System.out.println("SQL exception! in insertion into items"+sqle);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
 		} finally{
 			closeConnection(connection);
 		}

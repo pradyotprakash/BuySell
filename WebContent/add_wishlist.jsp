@@ -43,6 +43,7 @@
 	}
 %>
 <script>
+	var first_time=true;
 	function toggle_div_display(div_id){
 		var x = document.getElementById("item" + div_id);
 		var y = document.getElementById("b" + div_id);
@@ -95,8 +96,11 @@
 	function showMe(id) {
 		var count = document.getElementsByName('entries').length;
 	    var chboxs = document.getElementById(id);
-		if(chboxs.checked == true && count!=0) {
-			document.getElementById('a').innerHTML="I hate my Life";
+		if(first_time) {
+			for(var i=1;i<=count;i++) { 
+				document.getElementById('entry'+i).style.display = "none";
+			}
+			first_time=false;
 		}
 	    for(var i=1;i<=count;i++) { 
 	        if(id == 'cat1' && chboxs.checked == true){
@@ -135,6 +139,22 @@
 		        	 document.getElementById('entry'+i).style.display = "none";
 		         }
 	        }
+	        if(document.getElementById('cat1').checked == false && document.getElementById('cat2').checked == false && document.getElementById('cat3').checked == false){
+		        document.getElementById('entry'+i).style.display = "block";
+		        first_time=true;
+	        }
+	    }
+	    var j=1;
+	    for(j=1;j<=count;j++) {
+	    	if(document.getElementById('entry'+j).style.display == "block") {
+	    		break;
+	    	}
+	    }
+	    if(j==count+1) {
+	    	document.getElementById('submit_btn').style.display = "none";
+	    }
+	    else {
+	    	document.getElementById('submit_btn').style.display = "block";
 	    }
 	}
 </script>
@@ -171,11 +191,11 @@
 <%
 	if(session.getAttribute("wishlist_updated") != null){
 		if(session.getAttribute("wishlist_updated").equals("true")){
-			out.println("<span>Wishlist successfully updated!</span><br>");
+			out.println("<script>$(document).ready(function(){$('#myModal1').openModal();});</script>");
 			session.removeAttribute("wishlist_updated");
 		}
 		else{
-			out.println("<span>Wishlist could not be updated due to some error!</span><br>");
+			out.println("<script>$(document).ready(function(){$('#myModal').openModal();});</script>");
 			session.removeAttribute("wishlist_updated");	
 		}
 	}
@@ -194,6 +214,29 @@
 	}
 	else{
 		%>
+		
+		<div id="myModal" class="modal">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		        <h4 class="modal-title">Instructions</h4>
+		        <p>Wishlist could not be updated due to some error!</p>
+		    </div>
+		    <div class="modal-footer">
+		    	<button type="button" class="btn waves-effect btn-flat modal-action modal-close">Close</button>
+		    </div>
+		</div>
+	
+		<div id="myModal1" class="modal">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		        <h4 class="modal-title">Instructions</h4>
+		        <p>Wishlist successfully updated!</p>
+		    </div>
+		    <div class="modal-footer">
+		    	<button type="button" class="btn waves-effect btn-flat modal-action modal-close">Close</button>
+		    </div>
+		</div>
+	
 		<div class="card-panel">
 		<form action="process.jsp" class="col s12" method="post" onsubmit="return verify()">
 		<input name="type_of" type="hidden" value="sell_wishlist">
@@ -215,7 +258,7 @@
 				current = sb1;
 			}
 			
-			current.append("<div id='entry" + count + "' name='entries' style='display:none'>\n");
+			current.append("<div class='card-panel' id='entry" + count + "' name='entries'>\n");
 			current.append("<span id='e" + count + "' style='color:red'></span><br>\n");
 			current.append("<span>Item name: " + rs.getString(3) + "</span><br>\n\t");
 			current.append("<span>Description: " + rs.getString(4) + "</span><br>\n\t");
@@ -223,14 +266,16 @@
 			current.append("<span>Posted on: " + rs.getTimestamp(10) + "</span><br>\n\t");
 			current.append("<span id='q" + count + "'>Quantity remaining: " + rs.getInt(8) + "</span><br>\n\t");
 			current.append("<span>Price: " + rs.getInt(9) + "</span><br>\n\t");
-			current.append("<button id= 'b" + count + "' type='button' onclick='toggle_div_display(" + count + ")' class='btn waves-effect waves-light col s12'>Buy this</button><br>\n");
-			current.append("</div>\n");
+			current.append("<ul class='collapsible' data-collapsible='accordion'>");
+			current.append("<li><div id= 'b" + count + "' class='collapsible-header light-blue accent-3'>Buy this</div>\n");
 			
-			current.append("<div id='item" + count + "' style='display:none'>\n");
+			
+			current.append("<div class='collapsible-body' id='item" + count + "'>\n");
 			current.append("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>\n");
 			current.append("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>\n");
-			current.append("<div class='row'><div class='input-field col s12'><i class='mdi-action-question-answer prefix'></i><textarea name='item" + count + "_specification' value='" + al.get(0) + "' class='materialize-textarea'></textarea><label for='message'>Message</label></div></div>\n");
-			current.append("<div class='row'><div class='input-field col s12'><i class='mdi-content-add-box prefix'></i><input type='number' name='item" + count + "_quantity' value='" + al.get(1) + "'><label for='quantity'>Quantity</label></div></div>\n");
+			current.append("<div class='row'><div class='input-field col s10'><i class='mdi-action-question-answer prefix'></i><textarea name='item" + count + "_specification' value='" + al.get(0) + "' style='min-height:15px;max-height:18px' class='materialize-textarea'></textarea><label for='message'>Message</label></div>\n");
+			current.append("<div class='input-field col s2'><i class='mdi-content-add-box prefix'></i><input type='number' name='item" + count + "_quantity' value='" + al.get(1) + "'><label for='quantity'>Quantity</label></div></div>\n");
+			current.append("</div>\n</li></ul>");
 			current.append("</div>\n");
 			count++; 
 		}
@@ -243,12 +288,10 @@
 		}
 		out.println(sb2.toString());
 		out.println("<input type='hidden' name='order_list'><br>");
-		out.println("<div class='row'><div class='input-field col s2 right'><button type='submit' value='Submit' class='btn waves-effect waves-light col s12'>Submit<i class='mdi-content-send right'></i></button></div></div>");
+		out.println("<div id='submit_btn' class='row'><div class='input-field col s2 right'><button type='submit' value='Submit' class='btn waves-effect waves-light col s12'>Submit<i class='mdi-content-send right'></i></button></div></div>");
 		out.println("</form></div>"); 
 	}
 	
 %>
-<span id="a"> Hi
-</span>
 </body>
 </html>

@@ -44,14 +44,13 @@
 
 <body>
 	<%@include file="header" %>
-	<br>
 <%
 	ResultSet rs = AccessDatabase.GetSellingListing(id);
 	if(!rs.isBeforeFirst()){
 		out.println("You are not selling anything now!<br>");
 	}
 	else{
-		out.println("Things you are selling at present:<br>");
+		out.println("<p class='caption'>Things you are selling at present:</p>");
 		out.print("<div class='col s12 m8 l9'>");
 		out.print("<table class='centered bordered'>\n\t<thead>\n\t<tr>\n\t\t");
 		out.print("<th>Sl. No.</th>\n\t\t");
@@ -113,19 +112,22 @@
 			out.println("You don't wish to buy any items not already here!");
 		}
 		else{
-			out.println("Things you wish to buy and are not already on this website:<br>");
+			out.println("<p class='caption'>Things you wish to buy and are not already on this website:</p>");
 	%>
-	
-	<table>
+	<div class='col s12 m8 l9'>
+	<table class='centered bordered'>
+	<thead>
 		<tr>
-			<td>Sl. No.</td>
-			<td>Item name</td>
-			<td>Quantity demanded</td>
-			<td>Price range</td>
-			<td>Category</td>
-			<td>Description</td>
-			<td>Comments</td>
+			<th>Sl. No.</th>
+			<th>Item name</th>
+			<th>Quantity demanded</th>
+			<th>Price range</th>
+			<th>Category</th>
+			<th>Description</th>
+			<th>Comments</th>
 		</tr>
+	</thead>
+	<tbody>
 	<%
 			while(rs.next()){
 				out.println("<tr>");
@@ -140,7 +142,7 @@
 				out.println("</tr>");
 				
 			}
-			out.println("</table>");
+			out.println("</tbody></table></div>");
 		}
 	%>
 </body>
