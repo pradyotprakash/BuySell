@@ -6,17 +6,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- CORE CSS-->    
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- jQuery Library -->
+    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">   
+    <!-- <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection"> 
+    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection"> -->
     <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
     <!--materialize js-->
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
@@ -80,7 +72,7 @@ else{
 	
 	<div class="col s12 m8 l9">
 		<div class="row">
-			<form method="post" class="login-form" action="process.jsp">
+			<form method="post" class="login-form" action="process.jsp" id="selling">
 				<div class="input-field col s12">
 					<input name="type_of" type="hidden" value="add_listing">
 				</div>
@@ -99,14 +91,25 @@ else{
 				<div class="input-field col s12">
 					<input type="number" name="item_price" required min="1">
 					<label for="price">Price</label>
-				</div>
+				</div>	
 				<div class="input-field col s12">
-					<input type="text" name="item_category" required>
 					<label for="category">Category</label>
-				</div>
-				<div class="input-field col s12">
-					<input type="file" name="photo">
-					<label for="category">Image</label>
+					<br>
+					<p>
+	                  <input name="item_category" value="Electronics" type="radio" id="test1" />
+	                  <label for="test1">Electronics</label>
+	                </p>
+	                <p>
+	                  <input name="item_category" value="Clothes" type="radio" id="test2" />
+	                  <label for="test2">Clothes</label>
+	                </p>
+	                <br>
+				</div>	
+				<div class="file-field input-field col s12">
+					<div class="btn">
+						<span>Image</span>
+						<input type="file" name="photo">
+					</div>
 				</div>
 				<div class="input-field col s6">
 					<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>

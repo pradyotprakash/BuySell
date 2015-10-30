@@ -106,12 +106,21 @@ else{
 					<label for="price">Price Range End</label>
 				</div>
 				<div class="input-field col s12">
-					<input type="text" name="item_category" required>
 					<label for="category">Category</label>
+					<br>
+					<p>
+	                  <input name="item_category" value="Electronics" type="radio" id="test1" />
+	                  <label for="test1">Electronics</label>
+	                </p>
+	                <p>
+	                  <input name="item_category" value="Clothes" type="radio" id="test2" />
+	                  <label for="test2">Clothes</label>
+	                </p>
+	                <br>
 				</div>
 				<div class="input-field col s12">
 					<input type="text" name="item_comments" required><br>
-					<label for="category">Comments</label>
+					<label for="comments">Comments</label>
 				</div>
 				<div class="input-field col s12">
 					<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>

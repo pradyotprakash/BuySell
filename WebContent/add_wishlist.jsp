@@ -1,3 +1,4 @@
+<%@page import="javax.swing.text.Document"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
@@ -90,12 +91,71 @@
 		else 
 			return false;
 	}
+	
+	function showMe(id) {
+		<%System.out.println("Function called	"); %>
+		var count = document.getElementsByName('entries').length;
+	    var chboxs = document.getElementByID(id);
+	    document.getElementByID('a').innerHTML="I hate my Life";
+		if(chbox.checked == true && count!=0) {
+			document.getElementByID('a').innerHTML="I hate my Life";
+		}
+	    for(var i=1;i<=count;i++) { 
+	    	<%System.out.println("Counter"); %>
+	        if(id == 'cat1' && chboxs.checked == true){
+	        	<%System.out.println("Cat1"); %>
+		         var category = document.getElementByID('category'+i).innerHTML;
+				 if(category=="Category: Electronics") {
+		        	 document.getElementById('entry'+i).style.display = "block";
+		         }
+	        }
+	        if(id == "cat2" && chboxs.checked == true){
+	        	<%System.out.println("Cat2"); %>
+		         var category = document.getElementByID('category'+i).innerHTML;
+		         if(category=="Category: Clothes") {
+		        	 document.getElementById('entry'+i).style.display = "block";
+		         }
+	        }
+	        if(id == "cat3" && chboxs.checked == true){
+	        	<%System.out.println("Cat3"); %>
+		         var category = document.getElementByID('category'+i).innerHTML;
+		         if(category!="Category: Clothes" && category!="Category: Electronics") {
+		        	 document.getElementById('entry'+i).style.display = "block";
+		         }
+	        }
+	    }
+	}
 </script>
 <title>See Listings</title>
 </head>
 
 <body>
 	<%@include file="header" %>
+	<form action="add_wishlist.jsp" class="col s12" method="post">
+		<div class="row">
+			<div class="input-field col s6">
+				<input type="text" name="search_bar">
+				<label for="search">Search Here!!</label>
+			</div>	
+			<div class="input-field col s6">
+				<button type="submit" class="btn waves-effect waves-light col s4">Search</button>
+			</div>
+		</div>
+	</form>
+	<div class="row">
+	    <div class="col s4 m4 l4">
+	      <input type="checkbox" name="cat" onclick="showMe('cat1')" id="cat1" />
+	      <label for="cat1">Electronics</label>
+	    </div>
+	    <div class="col s4 m4 l4">
+	      <input type="checkbox" name="cat" onclick="showMe('cat2')" id="cat2" />
+	      <label for="cat2">Clothes</label>
+	    </div>
+	    <div class="col s4 m4 l4">
+	      <input type="checkbox" name="cat" onclick="showMe('cat3')" id="cat3" />
+	      <label for="cat3">Others</label>
+	    </div>
+	</div>
 <%
 	if(session.getAttribute("wishlist_updated") != null){
 		if(session.getAttribute("wishlist_updated").equals("true")){
@@ -107,8 +167,14 @@
 			session.removeAttribute("wishlist_updated");	
 		}
 	}
-
-	ResultSet rs = AccessDatabase.Get_items_on_sale(id);
+	String search="";
+	
+	search=request.getParameter("search_bar");
+	if(search==null) {
+		search="";
+	}
+	
+	ResultSet rs = AccessDatabase.Get_items_on_sale(id, search);
  	HashMap<String, ArrayList<String>> userWishlistInfo = AccessDatabase.GetAlreadyMarkedForBuyingListing(id);
  	int count = 1;
 	if(!rs.isBeforeFirst()){
@@ -116,7 +182,6 @@
 	}
 	else{
 		%>
-		<hr>
 		<div class="card-panel">
 		<form action="process.jsp" class="col s12" method="post" onsubmit="return verify()">
 		<input name="type_of" type="hidden" value="sell_wishlist">
@@ -138,11 +203,11 @@
 				current = sb1;
 			}
 			
-			current.append("<div id='entry' name='entries'>\n");
+			current.append("<div id='entry" + count + "' name='entries' style='display:none'>\n");
 			current.append("<span id='e" + count + "' style='color:red'></span><br>\n");
 			current.append("<span>Item name: " + rs.getString(3) + "</span><br>\n\t");
 			current.append("<span>Description: " + rs.getString(4) + "</span><br>\n\t");
-			current.append("<span>Category: " + rs.getString(5) + "</span><br>\n\t");
+			current.append("<span id='category" + count + "'>Category: " + rs.getString(5) + "</span><br>\n\t");
 			current.append("<span>Posted on: " + rs.getTimestamp(10) + "</span><br>\n\t");
 			current.append("<span id='q" + count + "'>Quantity remaining: " + rs.getInt(8) + "</span><br>\n\t");
 			current.append("<span>Price: " + rs.getInt(9) + "</span><br>\n\t");
@@ -171,5 +236,7 @@
 	}
 	
 %>
+<span id="a"> Hi
+</span>
 </body>
 </html>

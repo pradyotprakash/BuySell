@@ -53,17 +53,24 @@ public class AccessDatabase {
 		return rs;
 	}
 	
-	public static ResultSet Get_items_on_sale(String owner){
-		
+	public static ResultSet Get_items_on_sale(String owner, String search){
 		boolean flag = false;
 		Connection connection = null;
 		ResultSet rs = null;
 		
 		try{
 			connection = getConnection();
-			
-			PreparedStatement pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ?");
-			pstmt.setString(1, owner);
+			PreparedStatement pstmt;
+
+			if(search=="") {
+				pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ?");
+				pstmt.setString(1, owner);
+			}
+			else {
+				pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ? and upper(name) like upper(?)");
+				pstmt.setString(1, owner);
+				pstmt.setString(2, "%"+search+"%");
+			}
 			rs = pstmt.executeQuery();
 		
 		} catch(SQLException sqle){
