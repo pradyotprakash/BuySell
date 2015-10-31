@@ -1,4 +1,4 @@
-<nav class="indigo">
+<nav class="red accent-3">
 	<div class="nav-wrapper">
 		<ul>	
 			<li><a href="home.jsp">Home</a></li>
@@ -8,7 +8,7 @@
 			<li><a href="see_listings.jsp">Your listings</a></li>
 			<li><a href="messages.jsp">Messages</a></li>
 			<li><a href="history.jsp">History</a></li>
-			<li><a href="search.jsp">Search for items</a></li>
+			<!--<li><a href="search.jsp">Search for items</a></li>-->
 			<li class="right"><a href="logout.jsp">Logout</a></li>
 			<li class="right"><a href="profile.jsp">Profile</a></li>
 		</ul>

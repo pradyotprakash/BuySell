@@ -119,10 +119,11 @@
 	          					</div>
 	        				</div>
 	        				<div class="row">
-	          					<div class="input-field col s12">
-	            					<i class="mdi-action-lock-outline prefix"></i>
-	            					<input type="file" name="photo" required>
-									<label for="category">Image</label>
+	          					<div class="file-field input-field col s12">
+	            					<div class="btn">
+										<span>Image</span>
+										<input type="file" name="photo">
+									</div>
 	          					</div>
 	        				</div>
 	        				<div class="row">

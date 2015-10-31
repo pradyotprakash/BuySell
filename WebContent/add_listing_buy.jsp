@@ -123,7 +123,7 @@ else{
 	                <br>
 				</div>
 				<div class="input-field col s12">
-					<input type="text" name="item_comments" required><br>
+					<input type="text" name="item_comments"><br>
 					<label for="comments">Comments</label>
 				</div>
 				<div class="input-field col s12">

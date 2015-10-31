@@ -7,13 +7,11 @@
 	<!-- CORE CSS-->    
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">   
-    <!-- <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection"> 
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection"> -->
     <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
     <!--materialize js-->
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
     <!--scrollbar-->
-    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 <title>Add listing</title>
 </head>
 <body>
@@ -70,7 +68,7 @@ else{
 	    </div>
 	</div>
 	
-	<div class="col s12 m12 l12">
+	<div class="col s6 m6 l6 center-align">
 		<div class="row">
 			<form method="post" class="login-form" action="process.jsp" id="selling">
 				<div class="input-field col s12">
@@ -115,7 +113,7 @@ else{
 						<input type="file" name="photo">
 					</div>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12">
 					<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>
 				</div>
 			</form>

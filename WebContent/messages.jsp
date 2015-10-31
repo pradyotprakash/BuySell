@@ -13,19 +13,12 @@
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->    
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- jQuery Library -->
     <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
     <!--materialize js-->
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
     <!--scrollbar-->
-    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 <title>Messages</title>
 </head>
 <%	
@@ -46,8 +39,14 @@
 	}
 %>
 <body>
+<script>
+	var myIframe = document.getElementById('message_frame');
+	myIframe.onload = function(){
+	    myIframe.contentWindow.scrollTo(0,50000);
+	};
+</script>
 <%@ include file="header" %>
-<div class="container">
+<div class="wrapper">
 	<aside id="left-sidebar-nav">
         <ul id="slide-out" class="side-nav fixed leftside-navigation">
         	<p class="caption">List of all users:</p>
@@ -60,11 +59,11 @@
 				out.println("<label for='" + al.get(i).second + "'>" + al.get(i).second + "</label></p></li>");
 			}
 		}
-	%>		<li><div class="row">
-            	<div class="input-field col s6">
-					<button type="submit" value='Chat' class="btn waves-effect waves-light col s12">Chat</button>
+	%>		<div class="row col s12">
+            	<div class="input-field col s12">
+					<button type="submit" value='Chat' class="btn waves-effect waves-light col s6 right">Chat</button>
 				</div>
-			</div></li>
+			</div>
 			</form>
 		</ul>
 	</aside>
@@ -81,11 +80,12 @@
 	if(session.getAttribute("receiver_id") != null){
 %>	
 	<section id="content">
-		<div class="container">
-			<div class="section right" style="padding-left:10%;padding-top:10px; width:90%">
+		<div class="container right" style="padding-left:450px">
+			<div class="section" style="padding-top:10px;width:90%">
 			<%
 				String chattingWith = session.getAttribute("receiver_id").toString();
-				out.println("<span style='color:blue;'>" + chattingWith + "</span><br>");
+				out.println("<div class='row'><div class='col s6' style='position:relative;left:30px'><p class='caption blue-text'>" + chattingWith+"</p></div>");
+				out.println("<div class='col s6' style='position:relative;left:90px'><p class='caption red-text'>" + name+"</p></div></div>");
 			%>
 				<iframe width="800" height="400" src="show_message.jsp" id="message_frame">
 				</iframe>

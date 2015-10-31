@@ -11,19 +11,13 @@
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->    
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
 
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- jQuery Library -->
     <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
     <!--materialize js-->
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
     <!--scrollbar-->
-    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 <title>Inventory</title>
 </head>
 
@@ -47,6 +41,7 @@
 
 <body>
 <%@ include file="header" %>
+	<div class="container">
 	<p class="caption">Your transaction history as a seller:</p>
 <%
 	ResultSet rs = AccessDatabase.GetTransactionHistoryAsSeller(id);
@@ -140,6 +135,7 @@
 <%
 	}
 %>
-
+	<br>
+	</div>
 </body>
 </html>

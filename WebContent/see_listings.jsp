@@ -14,19 +14,13 @@
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->    
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
 
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="materialize/css/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- jQuery Library -->
     <script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>    
     <!--materialize js-->
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
     <!--scrollbar-->
-    <script type="text/javascript" src="materialize/js/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 <title>See Listings</title>
 </head>
 <%	
@@ -50,12 +44,12 @@
 		out.println("You are not selling anything now!<br>");
 	}
 	else{
-		out.println("<p class='caption'>Things you are selling at present:</p>");
+		out.println("<div class='container'><p class='caption'>Things you are selling at present:</p>");
 		out.print("<div class='col s12 m8 l9'>");
 		out.print("<table class='centered bordered'>\n\t<thead>\n\t<tr>\n\t\t");
 		out.print("<th>Sl. No.</th>\n\t\t");
-		out.print("<th>Item name</th>\n\t\t");
 		out.print("<th>Item id</th>\n\t\t");
+		out.print("<th>Item name</th>\n\t\t");
 		out.print("<th>Item description</th>\n\t\t");
 		out.print("<th>Category</th>\n\t\t");
 		out.print("<th>Posted on</th>\n\t\t");
@@ -87,22 +81,28 @@
 			if(rs.getString(11) != null){
 				out.print("<td>");
 				out.print("<form action='process.jsp' method='post'> ");
-				out.print("<input name=\"type_of\" type=\"hidden\" value=\"sell_item\">");
-				out.println("<input type='hidden' name='owner' value='"+session.getAttribute("username").toString()+"'><br>");
 				out.print("<button type='submit' class='btn waves-effect waves-light col s12'>Sell</button>");
+				out.println("<div style='display:none'>");
+				out.println("<input name='type_of' style='display:none' type='hidden' value='sell_item'>");
+				out.println("<input type='hidden' style='display:none' name='owner' value='"+session.getAttribute("username").toString()+"'><br>");
 				out.println("<input type='hidden' name='buyer' value='" + rs.getString(11) + "'><br>");
 				out.println("<input type='hidden' name='id' value='" + rs.getString(1) + "'><br>");
-				out.println("<input type='hidden' name='quantity' value='" + rs.getString(13) + "'><br>");
+				out.println("<input type='hidden' name='quantity' value='" + rs.getString(13) + "'><br></div>");
 				out.println("</form>");
 				out.print("</td>\n\t\t");
-			}			
+			}
+			else {
+				out.print("<td>");
+				out.print("<button class='btn waves-effect waves-light col s12 disabled'>Sell</button>");
+				out.print("</td>\n\t\t");
+			}
 			out.print("</tr>\n\t");
 			count++;
 		}
 		out.print("</tbody>");
 		out.println("</table>");
-		out.println("</div>");	
-		out.println("<br><hr>");
+		out.println("</div></div>");	
+		out.println("<br>");
 	}
 	
 		rs = AccessDatabase.AllItemsFromItemBuy(id);
@@ -112,7 +112,7 @@
 			out.println("You don't wish to buy any items not already here!");
 		}
 		else{
-			out.println("<p class='caption'>Things you wish to buy and are not already on this website:</p>");
+			out.println("<div class='container'><p class='caption'>Things you wish to buy and are not already on this website:</p>");
 	%>
 	<div class='col s12 m8 l9'>
 	<table class='centered bordered'>
@@ -142,7 +142,7 @@
 				out.println("</tr>");
 				
 			}
-			out.println("</tbody></table></div>");
+			out.println("</tbody></table></div></div>");
 		}
 	%>
 </body>

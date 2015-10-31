@@ -11,15 +11,6 @@
 
 <head>
     <title>Home</title>
-
-    <!-- Favicons-->
-    <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
-    <!-- Favicons-->
-    <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
-    <!-- For iPhone -->
-    <meta name="msapplication-TileColor" content="#00bcd4">
-    <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
-
     <!-- CORE CSS-->    
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -49,7 +40,7 @@
 	 %>
 <body>
 	<%@include file="header" %>
-	
+	<div class="container">
 	<%
 		out.println("<p class='caption'><b>Welcome " + name+"</b></p>");
 		ResultSet rs = AccessDatabase.AllItemsFromItemBuy();
@@ -95,6 +86,7 @@
 			out.println("</tbody></table></div>");
 		}
 	%>
+	</div>
 </body>
 
 </html>
