@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class UpdateDatabase {
 	
-	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, int item_price, int item_quantity) throws IOException{
+	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, int item_price, int item_quantity) {
 		System.out.println("9090");
 		boolean flag = false;
 		Connection connection = null;
@@ -84,10 +84,6 @@ public class UpdateDatabase {
 				e.printStackTrace();
 			}
 			System.out.println("SQL exception! in insertion into items"+sqle);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-			e.printStackTrace();
 		} finally{
 			closeConnection(connection);
 		}

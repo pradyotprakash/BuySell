@@ -270,7 +270,7 @@
 			current.append("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>\n");
 			current.append("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>\n");
 			current.append("<div class='row'><div class='input-field col s10'><i class='mdi-action-question-answer prefix'></i><textarea name='item" + count + "_specification' value='" + al.get(0) + "' style='min-height:15px;max-height:18px' class='materialize-textarea'></textarea><label for='message'>Message</label></div>\n");
-			current.append("<div class='input-field col s2'><i class='mdi-content-add-box prefix'></i><input type='number' min='1' name='item" + count + "_quantity'><label for='quantity'>Quantity</label></div></div>\n");
+			current.append("<div class='input-field col s2'><i class='mdi-content-add-box prefix'></i><input type='number' min='1' name='item" + count + "_quantity' value='" + al.get(1) + "' ><label for='quantity'>Quantity</label></div></div>\n");
 			current.append("</div>\n</li></ul>");
 			current.append("</div>\n");
 			count++; 
