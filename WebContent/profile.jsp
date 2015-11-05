@@ -40,7 +40,18 @@
 	}
 %>
 <body>
-<%@ include file="header" %>
+<%
+	if(id.equals("admin")){
+%>
+	<%@include file="admin_header"%>
+<%
+	}
+	else{
+%>
+	<%@include file="header"%>
+<%		
+	}
+%>
 <%
 	ResultSet rs = AccessDatabase.GetProfileData(id);
 %>

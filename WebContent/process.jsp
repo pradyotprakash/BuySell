@@ -124,6 +124,9 @@
 				out.println("<script>window.location.assign('see_listings.jsp')</script>");
 			}
 		}
+		else if(type.equals("add_category"){
+			
+		}
 	}
 	
 %>

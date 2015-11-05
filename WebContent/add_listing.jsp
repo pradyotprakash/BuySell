@@ -1,3 +1,5 @@
+<%@page import="database.AccessDatabase"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,9 +34,17 @@ else{
 	}
 }
 
+if(id.equals("admin")){
 %>
-	<%@include file="header" %>
+	<%@include file="admin_header"%>
 <%
+	}
+	else{
+%>
+	<%@include file="header"%>
+<%		
+	}
+
 	if(session.getAttribute("item_sell_insert") != null){
 		if(session.getAttribute("item_sell_insert").equals("true")){
 			out.println("<script>$(document).ready(function(){$('#myModal').openModal();});</script>");
@@ -93,18 +103,27 @@ else{
 				<div class="input-field col s12">
 					<label for="category">Category</label>
 					<br>
-					<p>
-	                  <input name="item_category" value="Electronics" type="radio" id="test1" />
-	                  <label for="test1">Electronics</label>
-	                </p>
-	                <p>
-	                  <input name="item_category" value="Clothes" type="radio" id="test2" />
-	                  <label for="test2">Clothes</label>
-	                </p>
-	                <p>
-	                  <input name="item_category" value="Others" type="radio" id="test3" />
-	                  <label for="test3">Others</label>
-	                </p>
+<%
+					ArrayList<String> al = AccessDatabase.GetExistingCategories();
+					
+					int i = 1;
+					for(String s : al){
+						if(s.equals("Others")){
+							continue;
+						}
+						out.println("<p>");
+						out.println("<input name='item_category' value='" + s + "' type='radio' id='test" + i + "' />");
+						out.println("<label for='test" + i + "'>" + s + "</label>");
+						++i;
+				        out.println("</p>");
+					}
+					
+					out.println("<p>");
+					out.println("<input name='item_category' value='" + "Other" + "' type='radio' id='test" + i + "' />");
+					out.println("<label for='test" + i + "'>" + "Other" + "</label>");
+					++i;
+			        out.println("</p>");
+%>					
 	                <br>
 				</div>	
 				<div class="file-field input-field col s12">

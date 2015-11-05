@@ -45,7 +45,18 @@
 	    myIframe.contentWindow.scrollTo(0,50000);
 	};
 </script>
-<%@ include file="header" %>
+<%
+	if(id.equals("admin")){
+%>
+	<%@include file="admin_header"%>
+<%
+	}
+	else{
+%>
+	<%@include file="header"%>
+<%		
+	}
+%>
 <div class="wrapper">
 	<aside id="left-sidebar-nav">
         <ul id="slide-out" class="side-nav fixed leftside-navigation">
@@ -55,7 +66,7 @@
 		ArrayList<Pair<String, String>> al = AccessDatabase.ListOfAllUsers();
 		for(int i=0;i<al.size();++i){
 			if(!id.equals(al.get(i).first)){
-				out.print("<li><p><input type='radio' name='active_user' value='" + al.get(i).first + "'id='" + al.get(i).first + "'/>");
+				out.print("<li><p><input type='radio' name='active_user' value='" + al.get(i).first + "' id='" + al.get(i).first + "'/>");
 				out.println("<label for='" + al.get(i).second + "'>" + al.get(i).second + "</label></p></li>");
 			}
 		}

@@ -37,10 +37,20 @@
 				name = session.getAttribute("username").toString();
 		}
 	}
+if(id.equals("admin")){
+%>
+	<%@include file="admin_header"%>
+<%
+	}
+	else{
+%>
+	<%@include file="header"%>
+<%		
+	}
 %>
 
 <body>
-<%@ include file="header" %>
+
 	<div class="container">
 	<p class="caption">Your transaction history as a seller:</p>
 <%

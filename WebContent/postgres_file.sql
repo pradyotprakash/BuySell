@@ -23,6 +23,10 @@ create table user_images(
 create table categories(
 	category varchar(50) primary key
 );
+insert into categories values('Electronics');
+insert into categories values('Clothes');
+insert into categories values('Others');
+insert into categories values('Mobiles');
 
 create table login_data(
 	id varchar(20),

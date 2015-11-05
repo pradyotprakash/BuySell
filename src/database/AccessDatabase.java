@@ -8,6 +8,34 @@ import java.util.TreeSet;
 
 public class AccessDatabase {
 	
+	public static ArrayList<String> GetExistingCategories(){
+		
+		Connection connection = null;
+		ArrayList<String> al = null;
+		
+		try{
+			connection = getConnection();
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from categories");
+			ResultSet rs = pstmt.executeQuery();
+			
+			al = new ArrayList<String>();
+			
+			while(rs.next()){
+				al.add(rs.getString(1));
+			}
+			
+		
+		} catch(SQLException sqle){
+			System.out.println("SQL exception! in GetCategories " + sqle);
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return al;
+		
+	}
+	
 	public static ResultSet GetProfileData(String id){
 		
 		Connection connection = null;

@@ -153,12 +153,24 @@
 	    	document.getElementById('submit_btn').style.display = "block";
 	    }
 	}
+%>
 </script>
 <title>See Listings</title>
 </head>
 
 <body>
-	<%@include file="header" %>
+<%
+	if(id.equals("admin")){
+%>
+	<%@include file="admin_header"%>
+<%
+	}
+	else{
+%>
+	<%@include file="header"%>
+<%		
+	}
+%>
 	<form action="add_wishlist.jsp" class="col s12" method="post">
 		<div class="row">
 			<div class="input-field col s6">
