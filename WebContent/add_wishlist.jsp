@@ -89,7 +89,7 @@
 			return false;
 	}
 	
-	function showMe(id) {
+	function showMe(id,s,l1) {
 		var count = document.getElementsByName('entries').length;
 	    var chboxs = document.getElementById(id);
 		if(first_time) {
@@ -98,49 +98,37 @@
 			}
 			first_time=false;
 		}
-	    for(var i=1;i<=count;i++) { 
-	        if(id == 'cat1' && chboxs.checked == true){
+	    for(var i=1;i<=count;i++) {
+	        if(chboxs.checked == true){
 		         var category = document.getElementById('category'+i).innerHTML;
-				 if(category=="Category: Electronics") {
+				 if(category=="Category: "+s) {
 		        	 document.getElementById('entry'+i).style.display = "block";
 		         }
 	        }
-	        if(id == 'cat1' && chboxs.checked == false){
+	        if(chboxs.checked == false){
 		         var category = document.getElementById('category'+i).innerHTML;
-				 if(category=="Category: Electronics") {
+				 if(category=="Category: "+s) {
 		        	 document.getElementById('entry'+i).style.display = "none";
 		         }
-	        }
-	        if(id == "cat2" && chboxs.checked == true){
-		         var category = document.getElementById('category'+i).innerHTML;
-		         if(category=="Category: Clothes") {
-		        	 document.getElementById('entry'+i).style.display = "block";
-		         }
-	        }
-	        if(id == "cat2" && chboxs.checked == false){
-		         var category = document.getElementById('category'+i).innerHTML;
-		         if(category=="Category: Clothes") {
-		        	 document.getElementById('entry'+i).style.display = "none";
-		         }
-	        }
-	        if(id == "cat3" && chboxs.checked == true){
-		         var category = document.getElementById('category'+i).innerHTML;
-		         if(category!="Category: Clothes" && category!="Category: Electronics") {
-		        	 document.getElementById('entry'+i).style.display = "block";
-		         }
-	        }
-	        if(id == "cat3" && chboxs.checked == false){
-		         var category = document.getElementById('category'+i).innerHTML;
-		         if(category!="Category: Clothes" && category!="Category: Electronics") {
-		        	 document.getElementById('entry'+i).style.display = "none";
-		         }
-	        }
-	        if(document.getElementById('cat1').checked == false && document.getElementById('cat2').checked == false && document.getElementById('cat3').checked == false){
-		        document.getElementById('entry'+i).style.display = "block";
-		        first_time=true;
 	        }
 	    }
 	    var j=1;
+        var none_selected=true;
+        for(j=1;j<l1;j++) {
+	        if(document.getElementById('cat'+j).checked == true){
+		        none_selected=false;
+		        break;
+	        }
+        }
+        if(document.getElementById('Others').checked == true){
+	        none_selected=false;
+        }
+        if(none_selected==true){
+        	for(var i=1;i<=count;i++) {
+        		document.getElementById('entry'+i).style.display = "block";
+        	}
+	        first_time=true;
+        }
 	    for(j=1;j<=count;j++) {
 	    	if(document.getElementById('entry'+j).style.display == "block") {
 	    		break;
@@ -153,7 +141,6 @@
 	    	document.getElementById('submit_btn').style.display = "block";
 	    }
 	}
-%>
 </script>
 <title>See Listings</title>
 </head>
@@ -183,18 +170,27 @@
 		</div>
 	</form>
 	<div class="row">
-	    <div class="col s4 m4 l4">
-	      <input type="checkbox" name="cat" onclick="showMe('cat1')" id="cat1" />
-	      <label for="cat1">Electronics</label>
-	    </div>
-	    <div class="col s4 m4 l4">
-	      <input type="checkbox" name="cat" onclick="showMe('cat2')" id="cat2" />
-	      <label for="cat2">Clothes</label>
-	    </div>
-	    <div class="col s4 m4 l4">
-	      <input type="checkbox" name="cat" onclick="showMe('cat3')" id="cat3" />
-	      <label for="cat3">Others</label>
-	    </div>
+<%
+		ArrayList<String> al1 = AccessDatabase.GetExistingCategories();
+		int l=al1.size();
+		int l1=al1.size();
+		if(12/l == 0){
+			l=12;
+		}
+		int i=1;
+		for(String s : al1){
+			if(s.equals("Others")){
+				continue;
+			}
+			out.println("<div class='col s" + 12/l + " m" + 12/l +" l" + 12/l + "'>");
+			out.println("<input type='checkbox' name='cat' onclick=\"showMe('cat"+i+"','"+s+"',"+l1+")\" id='cat"+i+"' />");
+			out.println("<label for='cat"+i+"'>"+s+"</label></div>");
+			i++;
+		}
+		out.println("<div class='col s" + 12/l + " m" + 12/l +" l" + 12/l + "'>");
+		out.println("<input type='checkbox' name='cat' onclick=\"showMe('Others','Others',"+l1+")\" id='Others' />");
+		out.println("<label for='Others'>Others</label></div>");
+%>
 	</div>
 <%
 	if(session.getAttribute("wishlist_updated") != null){

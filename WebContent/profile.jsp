@@ -84,6 +84,61 @@
 			</div>
 		</div>
 	</section>
-
+	<section>
+	<div id="basic-form" class="section">
+		<div class="row">
+			<div class="col s12 m12 l12">
+				<div class="card-panel">
+					<div class = "row">
+						<p class="caption center">Update your profile</p>
+						<form action="register.jsp" class="col s12" method="post">
+						<div class="row">
+				        	<div class="input-field col s12">
+					            <i class="mdi-social-person-outline prefix"></i>
+								<input type="text" name="name"  required value=""/>
+								<label for="username" class="center-align">Username</label>
+							</div>
+						</div>
+						<div class="row">
+				        	<div class="input-field col s12">
+					            <i class="mdi-communication-email prefix"></i>
+								<input type="email" name="email"  required value=""/>
+								<label for="email" class="center-align">Email</label>
+							</div>
+						</div>
+						<div class="row">
+          					<div class="input-field col s12">
+            					<i class="mdi-action-lock-outline prefix"></i>
+            					<input id="password" name="passwd" type="password" required>
+            					<label for="password">Password</label>
+          					</div>
+        				</div>
+        				<div class="row">
+          					<div class="input-field col s12">
+            					<i class="mdi-action-lock-outline prefix"></i>
+            					<input id="re_password" name="re_passwd" type="password" required>
+            					<label for="re_password">Retype Password</label>
+          					</div>
+        				</div>
+        				<div class="row">
+          					<div class="file-field input-field col s12">
+            					<div class="btn">
+									<span>Image</span>
+									<input type="file" name="photo">
+								</div>
+          					</div>
+        				</div>
+        				<div class="row">
+          					<div class="input-field col s12">
+								<button class="btn waves-effect waves-light right" type="submit">Register Now<i class="mdi-content-send right"></i></button>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+	</section>
 </body>
 </html>
