@@ -8,7 +8,8 @@
 			<li><a href="see_listings.jsp">Your listings</a></li>
 			<li><a href="messages.jsp">Messages</a></li>
 			<li><a href="history.jsp">History</a></li>
-			<li><a href="add_category.jsp">Update categories</a></li>
+			<li><a href="add_category.jsp">Add categories</a></li>
+			<li><a href="delete_items.jsp">Delete items</a></li>
 			<!--<li><a href="search.jsp">Search for items</a></li>-->
 			<li class="right"><a href="logout.jsp">Logout</a></li>
 			<li class="right"><a href="profile.jsp">Profile</a></li>

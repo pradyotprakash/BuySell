@@ -91,13 +91,24 @@ public class AccessDatabase {
 			PreparedStatement pstmt;
 
 			if(search=="") {
-				pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ?");
-				pstmt.setString(1, owner);
+				if(owner.equals("admin")){
+					pstmt = connection.prepareStatement("select * from items natural join item_sell");
+				}
+				else{
+					pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ?");
+					pstmt.setString(1, owner);
+				}
 			}
 			else {
-				pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ? and upper(name) like upper(?)");
-				pstmt.setString(1, owner);
-				pstmt.setString(2, "%"+search+"%");
+				if(owner.equals("admin")){
+					pstmt = connection.prepareStatement("select * from items natural join item_sell where upper(name) like upper(?)");
+				}
+				else{
+					pstmt = connection.prepareStatement("select * from items natural join item_sell where id <> ? and upper(name) like upper(?)");
+					pstmt.setString(1, owner);
+					pstmt.setString(2, "%"+search+"%");
+				}
+				
 			}
 			rs = pstmt.executeQuery();
 		
