@@ -41,6 +41,19 @@
 %>
 <body>
 <%
+	if(session.getAttribute("update_profile") != null){
+		if(session.getAttribute("update_profile").equals("true")){
+			out.println("<script>$(document).ready(function(){$('#myModal1').openModal();});</script>");
+			session.removeAttribute("update_profile");
+		}
+		else{
+			out.println("<script>$(document).ready(function(){$('#myModal').openModal();});</script>");
+			session.removeAttribute("update_profile");	
+		}
+	}
+%>
+
+<%
 	if(id.equals("admin")){
 %>
 	<%@include file="admin_header"%>
@@ -84,14 +97,38 @@
 			</div>
 		</div>
 	</section>
+	
+	<div id="myModal" class="modal">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	        <h4 class="modal-title">Instructions</h4>
+	        <p>Profile could not be updated due to some error!</p>
+	    </div>
+	    <div class="modal-footer">
+	    	<button type="button" class="btn waves-effect btn-flat modal-action modal-close">Close</button>
+	    </div>
+	</div>
+
+	<div id="myModal1" class="modal">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	        <h4 class="modal-title">Instructions</h4>
+	        <p>Profile successfully updated!</p>
+	    </div>
+	    <div class="modal-footer">
+	    	<button type="button" class="btn waves-effect btn-flat modal-action modal-close">Close</button>
+	    </div>
+	</div>
+	
 	<section>
 	<div id="basic-form" class="section">
 		<div class="row">
 			<div class="col s12 m12 l12">
 				<div class="card-panel">
 					<div class = "row">
-						<p class="caption center">Update your profile</p>
-						<form action="register.jsp" class="col s12" method="post">
+						<p class="caption center" style="font-size:40px">Update your profile</p>
+						<form action="process.jsp" class="col s12" method="post">
+						<input name="type_of" type="hidden" value="update_profile">
 						<div class="row">
 				        	<div class="input-field col s12">
 					            <i class="mdi-social-person-outline prefix"></i>

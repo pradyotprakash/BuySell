@@ -22,7 +22,6 @@
 			name = session.getAttribute("username").toString();
 		logged_in = true;
 	}
-	System.out.println(request.getParameter("item_name"));
 	if(logged_in && request.getParameter("type_of") != null){
 		String type = request.getParameter("type_of");
 		if(type.equals("add_listing")){
@@ -42,8 +41,6 @@
 			else{
 				session.setAttribute("item_sell_insert", "false");
 			}
-			System.out.println(type);
-
 			out.println("<script>window.location.assign('add_listing.jsp')</script>");
 		}
 		else if(type.equals("add_listing_buy")){
@@ -124,11 +121,23 @@
 				out.println("<script>window.location.assign('see_listings.jsp')</script>");
 			}
 		}
+		else if(type.equals("update_profile")){
+			String name1 = request.getParameter("name");
+			String email = request.getParameter("email");
+			String password = request.getParameter("passwd");
+			
+			// execute update
+			boolean success = UpdateDatabase.updateprofile(id, name1, email, password);
+			if(success){
+				session.setAttribute("update_profile", "true");
+			}
+			else session.setAttribute("update_profile", "false");
+			out.println("<script>window.location.assign('profile.jsp')</script>");
+		}
 		else if(type.equals("add_category")){
 			String s = request.getParameter("categories");
 			String[] temp = s.split(",");
 			boolean success = UpdateDatabase.AddCategories(temp);
-			
 			if(success){
 				session.setAttribute("categories_added", "true");
 				out.println("<script>window.location.assign('add_category.jsp')</script>");

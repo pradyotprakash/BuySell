@@ -11,13 +11,17 @@
 
 <head>
     <title>Home</title>
-    <!-- CORE CSS-->    
-    <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
-    <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    	<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="materialize/css/materialize.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="materialize/css/style.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="materialize/css/custom-style.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="materialize/css/style-horizontal.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="materialize/css/prism.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="materialize/css/perfect-scrollbar.css" media="screen,projection">
+		<script type="text/javascript" src="materialize/js/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="materialize/js/materialize.js"></script>
+		<script type="text/javascript" src="materialize/js/prism.js"></script>
+		<script type="text/javascript" src="materialize/js/perfect-scrollbar.min.js"></script>
 </head>
 <%
 	String id = "", name="";
@@ -41,20 +45,30 @@
 	if(id.equals("admin")){
 %>
 	<%@include file="admin_header"%>
-		Already existing categories:<br>
+	<div class="container">
+		<p class="caption">Already existing categories:<br></p>
 		<div id="category_container">
 			
 		</div>
-		<input id="category_inp" />
-		
-		<button onclick="create_new_row()">Add category<br></button>
+		<div class="row">
+			<div class="input-field col s6">
+			<input id="category_inp" />
+			</div>
+			<div class="input-field col s6">
+			<button onclick="create_new_row()" class="btn waves-effect waves-light left">Add category<br></button>
+			</div>
+		</div>	
 		
 	<form action="process.jsp" method="post" onsubmit="populate_form()">
 		<input name="type_of" type="hidden" value="add_category">
-		<input name="categories" type="hidden" value=""><br>
-		<input type="submit"><br>
+		<div class="row">
+			<div class="input-field col s12">
+			<input name="categories" type="hidden" value="">
+			</div>
+		</div>
+		<button type="submit" class="btn waves-effect waves-light left">Submit</button>
 	</form>
-	
+	</div>
 	<script>
 	var li = [];
 	var ne = [];

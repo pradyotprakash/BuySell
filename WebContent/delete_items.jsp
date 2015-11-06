@@ -262,7 +262,6 @@
 		if(deletion_list.length == 0)
 			return false;
 		document.getElementsByName("deletion_list")[0].value = deletion_list;
-		alert(document.getElementsByName("deletion_list")[0].value);
 		return true;
 		
 	}

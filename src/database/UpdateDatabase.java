@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 
 public class UpdateDatabase {
@@ -46,8 +47,15 @@ public static boolean DeleteItems(String[] ids){
 			connection = getConnection();
 			connection.setAutoCommit(false);
 			
-			PreparedStatement pstmt = connection.prepareStatement
-					("delete from item_sell where item_id=?");
+			PreparedStatement pstmt = connection.prepareStatement("delete from item_sell_wishlist where item_id=?");
+			
+			for(int i=0;i<ids.length;++i){
+				
+				pstmt.setInt(1, Integer.parseInt(ids[i]));
+				pstmt.executeUpdate();
+			}
+			
+			pstmt = connection.prepareStatement("delete from item_sell where item_id=?");
 			
 			for(int i=0;i<ids.length;++i){
 				
@@ -150,6 +158,35 @@ public static boolean DeleteItems(String[] ids){
 		return flag;
 	}
 	
+	public static boolean updateprofile(String id, String name, String email, String passwd){
+		
+		Connection connection = null;
+		boolean status = false;
+		
+		try{
+			connection = getConnection();
+								
+			PreparedStatement pstmt = connection.prepareStatement("update login_data set username=?,email=?,password=? where id=?");
+			pstmt.setString(4, id);
+			pstmt.setString(1, name);
+			pstmt.setString(3, passwd);
+			pstmt.setString(2, email);
+			
+			pstmt.executeUpdate();
+			
+			status = true;
+			return true;
+			
+			
+		} catch(SQLException sqle){
+			System.out.println("SQL exception when registering");
+			status=false;
+		} finally{
+			closeConnection(connection);
+		}
+		return status;
+	}
+
 	public static boolean AddBuyingListing(String id, String item_name, String item_description, String item_category, String item_comments, int item_price1, int item_price2, int item_quantity){
 		
 		boolean flag = false;
