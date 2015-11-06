@@ -124,8 +124,33 @@
 				out.println("<script>window.location.assign('see_listings.jsp')</script>");
 			}
 		}
-		else if(type.equals("add_category"){
+		else if(type.equals("add_category")){
+			String s = request.getParameter("categories");
+			String[] temp = s.split(",");
+			boolean success = UpdateDatabase.AddCategories(temp);
 			
+			if(success){
+				session.setAttribute("categories_added", "true");
+				out.println("<script>window.location.assign('add_category.jsp')</script>");
+			}
+			else{
+				session.setAttribute("categories_added", "false");
+				out.println("<script>window.location.assign('add_category.jsp')</script>");
+			}
+		}
+		else if(type.equals("delete_items")){
+			String s = request.getParameter("deletion_list");
+			String[] temp = s.split(",");
+			boolean success = UpdateDatabase.DeleteItems(temp);
+			
+			if(success){
+				session.setAttribute("items_deleted", "true");
+				out.println("<script>window.location.assign('delete_items.jsp')</script>");
+			}
+			else{
+				session.setAttribute("items_deleted", "false");
+				out.println("<script>window.location.assign('delete_items.jsp')</script>");
+			}
 		}
 	}
 	

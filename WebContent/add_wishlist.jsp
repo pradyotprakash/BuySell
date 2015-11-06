@@ -169,6 +169,7 @@
 			</div>
 		</div>
 	</form>
+	
 	<div class="row">
 <%
 		ArrayList<String> al1 = AccessDatabase.GetExistingCategories();
@@ -206,7 +207,7 @@
 	String search="";
 	
 	search=request.getParameter("search_bar");
-	if(search==null) {
+	if(search == null) {
 		search="";
 	}
 	
@@ -272,8 +273,7 @@
 			current.append("<span>Price: " + rs.getInt(9) + "</span><br>\n\t");
 			current.append("<ul class='collapsible' data-collapsible='accordion'>");
 			current.append("<li><div id= 'b" + count + "' class='collapsible-header light-blue accent-3'>Buy this</div>\n");
-			
-			
+									
 			current.append("<div class='collapsible-body' id='item" + count + "'>\n");
 			current.append("<input type='hidden' name='item" + count + "_itemid' value='" + rs.getString(2) + "'>\n");
 			current.append("<input type='hidden' name='item" + count + "_owner' value='" + rs.getString(1) + "'>\n");
@@ -297,5 +297,5 @@
 	}
 	
 %>
-</body>
+</body>	
 </html>

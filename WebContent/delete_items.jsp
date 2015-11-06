@@ -37,6 +37,11 @@
 				name = session.getAttribute("username").toString();
 		}
 	}
+	
+	if(!id.equals("admin")){
+		out.println("Not authorized to access this page!! Go away.");
+	}
+	else{
 %>
 <script>
 	var first_time=true;
@@ -123,7 +128,7 @@
 <%		
 	}
 %>
-	<form action="add_wishlist.jsp" class="col s12" method="post">
+	<form action="delete_items.jsp" class="col s12" method="post">
 		<div class="row">
 			<div class="input-field col s6">
 				<input type="text" name="search_bar">
@@ -158,14 +163,14 @@
 %>
 	</div>
 <%
-	if(session.getAttribute("items_updated") != null){
-		if(session.getAttribute("items_updated").equals("true")){
+	if(session.getAttribute("items_deleted") != null){
+		if(session.getAttribute("items_deleted").equals("true")){
 			out.println("<script>$(document).ready(function(){$('#myModal1').openModal();});</script>");
-			session.removeAttribute("items_updated");
+			session.removeAttribute("items_deleted");
 		}
 		else{
 			out.println("<script>$(document).ready(function(){$('#myModal').openModal();});</script>");
-			session.removeAttribute("items_updated");	
+			session.removeAttribute("items_deleted");	
 		}
 	}
 	String search="";
@@ -206,7 +211,7 @@
 		</div>
 	
 		<div class="card-panel">
-		<form action="process.jsp" class="col s12" method="post" onsubmit="populate_input_field()">
+		<form action="process.jsp" class="col s12" method="post" onsubmit="return populate_input_field()">
 		<input name="type_of" type="hidden" value="delete_items">
 		<%
 		StringBuilder current = new StringBuilder();
@@ -234,6 +239,7 @@
 		out.println("<div id='submit_btn' class='row'><div class='input-field col s2 right'><button type='submit' value='Submit' class='btn waves-effect waves-light col s12'>Submit<i class='mdi-content-send right'></i></button></div></div>");
 		out.println("</form></div>"); 
 	}
+	}
 	
 %>
 </body>
@@ -253,7 +259,10 @@
 	}
 	
 	function populate_input_field(){
-		document.getElementsByNames("deletion_list")[0].value = deletion_list;
+		if(deletion_list.length == 0)
+			return false;
+		document.getElementsByName("deletion_list")[0].value = deletion_list;
+		alert(document.getElementsByName("deletion_list")[0].value);
 		return true;
 		
 	}

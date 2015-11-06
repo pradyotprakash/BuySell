@@ -18,13 +18,6 @@
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->    
     <link href="materialize/css/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-	<script>
-		var i = 2; 
-		function create_new_row(){
-			l = document.createElement('input');
-		}	
-	</script>
 </head>
 <%
 	String id = "", name="";
@@ -48,20 +41,59 @@
 	if(id.equals("admin")){
 %>
 	<%@include file="admin_header"%>
-<%
-		out.println("Already existing categories:<br>");
+		Already existing categories:<br>
+		<div id="category_container">
+			
+		</div>
+		<input id="category_inp" />
+		
+		<button onclick="create_new_row()">Add category<br></button>
+		
+	<form action="process.jsp" method="post" onsubmit="populate_form()">
+		<input name="type_of" type="hidden" value="add_category">
+		<input name="categories" type="hidden" value=""><br>
+		<input type="submit"><br>
+	</form>
+	
+	<script>
+	var li = [];
+	var ne = [];
+<%	
+		
 		ArrayList<String> al = AccessDatabase.GetExistingCategories();
 	
 		for(String s : al){
-			out.println(s + "<br>");
+			out.println("li.push('" + s + "')");
+		}
+		out.println("document.getElementById('category_container').innerHTML = li;");
+			
+%>	
+ 
+		function create_new_row(){
+			
+			var s = document.getElementById("category_inp").value;
+			if(li.indexOf(s) > -1){
+				alert("Already exists!");
+			}
+			else{
+				ne.push(s);
+				li.push(s);
+				s = "";
+				for(var i=0;i<li.length;++i){
+					s += li[i] + "<br>";
+				}
+				
+				document.getElementById("category_container").innerHTML = s;
+				document.getElementById("category_inp").value = "";
+			}			
 		}
 		
-%>
-	<form action="process.jsp" method="post">
-		<input name="type_of" type="hidden" value="add_category">
-		<button onclick="create_new_row()"><br></button>
-		<input type="submit"><br>
-	</form>
+		function populate_form(){
+			document.getElementsByName("categories")[0].value = ne;
+			return true;
+		}
+
+	</script>
 <%
 	}
 	else{

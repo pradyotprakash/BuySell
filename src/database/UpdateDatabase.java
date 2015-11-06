@@ -8,8 +8,67 @@ import java.sql.*;
 
 public class UpdateDatabase {
 	
+	public static boolean AddCategories(String[] categories){
+		
+		boolean flag = false;
+		Connection connection = null;  
+		
+		try{
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			
+			PreparedStatement pstmt = connection.prepareStatement
+					("insert into categories values(?)");
+			
+			for(int i=0;i<categories.length;++i){
+				pstmt.setString(1, categories[i]);
+				pstmt.executeUpdate();
+			}
+			
+			connection.commit();
+			flag = true;
+		
+		} catch(SQLException sqle){
+			System.out.println("SQL exception in AddCategories!");
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return flag;		
+	}
+	
+public static boolean DeleteItems(String[] ids){
+		
+		boolean flag = false;
+		Connection connection = null;  
+		
+		try{
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			
+			PreparedStatement pstmt = connection.prepareStatement
+					("delete from item_sell where item_id=?");
+			
+			for(int i=0;i<ids.length;++i){
+				
+				pstmt.setInt(1, Integer.parseInt(ids[i]));
+				pstmt.executeUpdate();
+			}
+			
+			connection.commit();
+			flag = true;
+		
+		} catch(SQLException sqle){
+			System.out.println("SQL exception in DeleteItems!" + sqle);
+		} finally{
+			closeConnection(connection);
+		}
+		
+		return flag;
+		
+	}
+	
 	public static boolean AddSellingListing(String id, String item_name, String item_description, String item_category, int item_price, int item_quantity) {
-		System.out.println("9090");
 		boolean flag = false;
 		Connection connection = null;
 		int i = 0;
