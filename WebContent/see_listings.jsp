@@ -95,7 +95,7 @@
 				out.print("<button type='submit' class='btn waves-effect waves-light col s12'>Sell</button>");
 				out.println("<div style='display:none'>");
 				out.println("<input name='type_of' style='display:none' type='hidden' value='sell_item'>");
-				out.println("<input type='hidden' style='display:none' name='owner' value='"+session.getAttribute("username").toString()+"'><br>");
+				out.println("<input type='hidden' style='display:none' name='owner' value='"+session.getAttribute("id").toString()+"'><br>");
 				out.println("<input type='hidden' name='buyer' value='" + rs.getString(11) + "'><br>");
 				out.println("<input type='hidden' name='id' value='" + rs.getString(1) + "'><br>");
 				out.println("<input type='hidden' name='quantity' value='" + rs.getString(13) + "'><br></div>");
