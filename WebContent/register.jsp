@@ -3,7 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="database.Session" %>
 <%@ page import="database.Register" %>
-<%@ page import="javax.servlet.http.Part" %>
+<%@ page import="javax.servlet.http.*" %>
 <%@ page import="java.io.*" %>
 <!DOCTYPE html>
 <html>

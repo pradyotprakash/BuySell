@@ -42,7 +42,7 @@ public class Register {
 			
 			
 		} catch(SQLException sqle){
-			System.out.println("SQL exception when registering");
+			System.out.println("SQL exception when registering"+sqle);
 		} finally{
 			closeConnection(connection);
 		}

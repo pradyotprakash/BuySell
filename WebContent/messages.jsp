@@ -66,8 +66,8 @@
 		ArrayList<Pair<String, String>> al = AccessDatabase.ListOfAllUsers();
 		for(int i=0;i<al.size();++i){
 			if(!id.equals(al.get(i).first)){ // && !al.get(i).first.equals("admin")){
-				out.print("<li><p><input type='radio' name='active_user' value='" + al.get(i).first + "' id='" + al.get(i).first + "'/>");
-				out.println("<label for='" + al.get(i).second + "'>" + al.get(i).second + "</label></p></li>");
+				out.print("<p><input type='radio' name='active_user' value='" + al.get(i).first + "' id='" + al.get(i).first + "'/>");
+				out.println("<label for='" + al.get(i).first + "'>" + al.get(i).second + "</label></p>");
 			}
 		}
 	%>		<div class="row col s12">

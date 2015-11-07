@@ -80,7 +80,7 @@ if(id.equals("admin")){
 	
 	<div class="col s6 m6 l6 center-align">
 		<div class="row">
-			<form method="post" class="login-form" action="process.jsp" id="selling">
+			<form method="post" class="login-form" action="process.jsp" id="selling" >
 				<div class="input-field col s12">
 					<input name="type_of" type="hidden" value="add_listing">
 				</div>

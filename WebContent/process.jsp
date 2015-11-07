@@ -24,7 +24,9 @@
 	}
 	if(logged_in && request.getParameter("type_of") != null){
 		String type = request.getParameter("type_of");
+		System.out.println("EHllo");
 		if(type.equals("add_listing")){
+			System.out.println("EHllo");
 			String item_name = request.getParameter("item_name");
 			String item_description = request.getParameter("item_description");
 			String item_category = request.getParameter("item_category");
@@ -63,7 +65,7 @@
 		}
 		
 		else if(type.equals("sell_wishlist")){
-			
+			System.out.println("EHllo");
 			String orderList = request.getParameter("order_list");
 			int count = orderList.length() - orderList.replace(",", "").length();
 			if(orderList.length() == 0 || count == 0){
@@ -77,7 +79,7 @@
 					String index = entriesToUpdate[i];
 					// check if already present in the database
 					String itemid = request.getParameter("item" + index + "_itemid");
-					
+					//System.out.println(itemid);
 					// insert
 					String owner = request.getParameter("item" + index + "_owner");
 					String specification = request.getParameter("item" + index + "_specification");
