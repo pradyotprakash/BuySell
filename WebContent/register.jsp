@@ -35,8 +35,8 @@
 	InputStream inputStream = null; // input stream of the upload file
     
     // obtains the upload file part in this multipart request
-    Part filePart = request.getPart("photo");
-    if (filePart != null) {
+    //Part filePart = request.getPart("photo");
+    /* if (filePart != null) {
         // prints out some information for debugging
         System.out.println(filePart.getName());
         System.out.println(filePart.getSize());
@@ -45,14 +45,14 @@
         // obtains input stream of the upload file
         inputStream = filePart.getInputStream();
     }
-	
+	 */
 	
 	
 	
 	if(id != null || name != null || email != null || passwd != null)
 		firstTime = false;
 	if(!firstTime){
-		status = Register.register(id, name, email, passwd, inputStream);
+		status = Register.register(id, name, email, passwd);
 		if(status == 0){
 			session.setAttribute("registered", "true");
 			out.println("<script>window.location.assign('index.jsp')</script>");

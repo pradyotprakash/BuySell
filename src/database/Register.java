@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Register {
 
-	public static int register(String id, String name, String email, String passwd, InputStream inputStream){
+	public static int register(String id, String name, String email, String passwd){
 		
 		Connection connection = null;
 		int status = 0;
@@ -28,13 +28,11 @@ public class Register {
 			if(count != 0)
 				return 1;
 						
-			pstmt = connection.prepareStatement("insert into login_data (id,username,password,email) values(?,?,?,?,?)");
+			pstmt = connection.prepareStatement("insert into login_data (id,username,password,email) values(?,?,?,?)");
 			pstmt.setString(1, id);
 			pstmt.setString(2, name);
 			pstmt.setString(3, passwd);
-			pstmt.setString(4, email);
-			pstmt.setBinaryStream(5, inputStream);
-			
+			pstmt.setString(4, email);			
 			pstmt.executeUpdate();
 			
 			status = 0;

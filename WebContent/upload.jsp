@@ -9,7 +9,7 @@
 <body>
 <form method="post" action="UploadServlet" enctype="multipart/form-data">
 Select file to upload:
-<input type="file" name="dataFile" id="fileChooser"/><br/><br/>
+<input type="text" name="dataFile" id="fileChooser"/><br/><br/>
 <input type="submit" value="Upload" />
 </form>
 </body>
