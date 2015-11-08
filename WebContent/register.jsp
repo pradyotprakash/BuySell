@@ -118,14 +118,7 @@
 	            					<label for="re_password">Retype Password</label>
 	          					</div>
 	        				</div>
-	        				<div class="row">
-	          					<div class="file-field input-field col s12">
-	            					<div class="btn">
-										<span>Image</span>
-										<input type="file" name="photo">
-									</div>
-	          					</div>
-	        				</div>
+	        			
 	        				<div class="row">
 	        					<div class="input-field col s6">
 									<a class="btn waves-effect waves-light left" href="index.jsp"><i class="mdi-content-reply left"></i>Back to Login page</a>

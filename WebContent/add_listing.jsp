@@ -126,12 +126,6 @@ if(id.equals("admin")){
 %>					
 	                <br>
 				</div>	
-				<div class="file-field input-field col s12">
-					<div class="btn">
-						<span>Image</span>
-						<input type="file" name="photo">
-					</div>
-				</div>
 				<div class="input-field col s12">
 					<button type="submit" class="btn waves-effect waves-light col s12">Submit</button>
 				</div>

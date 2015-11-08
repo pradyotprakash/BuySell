@@ -158,16 +158,8 @@
           					</div>
         				</div>
         				<div class="row">
-          					<div class="file-field input-field col s12">
-            					<div class="btn">
-									<span>Image</span>
-									<input type="file" name="photo">
-								</div>
-          					</div>
-        				</div>
-        				<div class="row">
           					<div class="input-field col s12">
-								<button class="btn waves-effect waves-light right" type="submit">Register Now<i class="mdi-content-send right"></i></button>
+								<button class="btn waves-effect waves-light right" type="submit">Update Info<i class="mdi-content-send right"></i></button>
 							</div>
 						</div>
 						</form>
